@@ -44247,7 +44247,7 @@ var render = function() {
       _c("div", { staticClass: "col-md-10" }, [
         _c("div", { staticClass: "card", attrs: { align: "center" } }, [
           _c("div", { staticClass: "card-header" }, [
-            _vm._v("Vocabulary Game")
+            _vm._v("Vocabulary Board")
           ]),
           _vm._v(" "),
           _c(

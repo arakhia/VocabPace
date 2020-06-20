@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card" align="center">
-                    <div  class="card-header" >Vocabulary Game</div>
+                    <div  class="card-header" >Vocabulary Board</div>
 
                     <div class="card-body row" style="align-items: center; align-content: center;">
                         <div class="vocabulary-container" v-for="(vocab, index) in vocabulary" :key="index" >
