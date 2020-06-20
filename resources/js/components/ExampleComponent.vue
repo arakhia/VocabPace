@@ -17,10 +17,10 @@
 <script>
     export default {
         mounted() {
-            window.Echo.channel('board-channel')
+            /*window.Echo.channel('board-channel')
             .listen('UpdateBoardEvent', (event) => {
                 console.log(event);
-            });
+            });*/
         }
     }
 </script>
