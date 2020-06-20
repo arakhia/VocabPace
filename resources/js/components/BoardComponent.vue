@@ -8,7 +8,7 @@
                     <div class="card-body row" style="align-items: center; align-content: center;">
                         <div class="vocabulary-container" v-for="(vocab, index) in vocabulary" :key="index" >
                             <input class="vocabulary" type="text"  :value="vocab.value" :id="'voc'+index" v-on:click="typing(index)">
-                            <progress class="m-progress" :id="index" :ref="index" value="1" max="4"> </progress>
+                            <progress class="m-progress" :id="index" :ref="index" value="0" max="4"> </progress>
                         </div>
                     </div>
 
@@ -28,7 +28,8 @@
                     {id: 3, value: 'computer'},
                     {id: 4, value: 'college'},
                     {id: 5, value: 'university'},
-                ]
+                ],
+                activeInput: null,
             }
         },
         mounted() {
@@ -40,13 +41,45 @@
         methods: {
             typing: function(index) {
                 
-            }
+                if(this.activeInput != null){
+                    document.getElementById('voc'+this.activeInput).disabled = true;
+                }
+                this.activeInput = index;
+                this.startProgressbar(index, 4);
+            },
+            startProgressbar: function(id, timer){
+                
+                var self = this;
+                document.getElementById('voc'+id).value = '';
+                
+                var runTimer = setInterval(function() {
+                    document.getElementById(id).value = 4 - timer;
+                    timer--;
+                    if (timer < 0)
+                    {
+                    self.isAnswerCorrect(id);
+                    document.getElementById('voc'+id).disabled = true;
+                    self.activeInput = null;
+                    clearInterval(runTimer);
+                    }
+                }, 1000);
+            },
+            isAnswerCorrect: function(vocabularyIndex)
+            {
+                var answer = document.getElementById('voc'+vocabularyIndex).value;
+                var originalVocabulary = this.vocabulary[vocabularyIndex].value;
+                if(originalVocabulary.localeCompare(answer, undefined, {sensitivity: 'accent'}) === 0){
+                    //Correct
+                } else {
+                    //Incorrect
+                    
+                }
+            },
         }
     }
 </script>
 
 <style scoped>
-
 .title {
     align-self: center;
 }

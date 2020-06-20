@@ -1946,7 +1946,8 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         id: 5,
         value: 'university'
-      }]
+      }],
+      activeInput: null
     };
   },
   mounted: function mounted() {
@@ -1955,7 +1956,39 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    typing: function typing(index) {}
+    typing: function typing(index) {
+      if (this.activeInput != null) {
+        document.getElementById('voc' + this.activeInput).disabled = true;
+      }
+
+      this.activeInput = index;
+      this.startProgressbar(index, 4);
+    },
+    startProgressbar: function startProgressbar(id, timer) {
+      var self = this;
+      document.getElementById('voc' + id).value = '';
+      var runTimer = setInterval(function () {
+        document.getElementById(id).value = 4 - timer;
+        timer--;
+
+        if (timer < 0) {
+          self.isAnswerCorrect(id);
+          document.getElementById('voc' + id).disabled = true;
+          self.activeInput = null;
+          clearInterval(runTimer);
+        }
+      }, 1000);
+    },
+    isAnswerCorrect: function isAnswerCorrect(vocabularyIndex) {
+      var answer = document.getElementById('voc' + vocabularyIndex).value;
+      var originalVocabulary = this.vocabulary[vocabularyIndex].value;
+
+      if (originalVocabulary.localeCompare(answer, undefined, {
+        sensitivity: 'accent'
+      }) === 0) {//Correct
+      } else {//Incorrect
+        }
+    }
   }
 });
 
@@ -44246,7 +44279,7 @@ var render = function() {
                     ref: index,
                     refInFor: true,
                     staticClass: "m-progress",
-                    attrs: { id: index, value: "1", max: "4" }
+                    attrs: { id: index, value: "0", max: "4" }
                   })
                 ]
               )
