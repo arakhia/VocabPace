@@ -24,3 +24,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/game', 'GameController@index')->name('game');
+Route::post('/game/update', 'GameController@update')->name('game.update');

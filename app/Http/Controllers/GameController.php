@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UpdateBoardEvent;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -15,9 +16,14 @@ class GameController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         return view('game.board');
+    }
+
+    public function update(Request $request)
+    {
+        //broadcast(new UpdateBoardEvent('updating'));
     }
 }
