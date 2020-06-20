@@ -22,15 +22,13 @@
     export default {
         data() {
             return {
-                vocabulary: [
-                    {id: 1, value: 'play'},
-                    {id: 2, value: 'match'},
-                    {id: 3, value: 'computer'},
-                    {id: 4, value: 'college'},
-                    {id: 5, value: 'university'},
-                ],
+                gameId: null,
+                vocabulary: null,
                 activeInput: null,
             }
+        },
+        created() {
+            this.getVocabularyList();
         },
         mounted() {
             window.Echo.channel('board-channel')
@@ -39,6 +37,13 @@
             });
         },
         methods: {
+            getVocabularyList: function(){
+                axios.post('game/create', {count: "12"})
+                .then(response => {
+                    this.gameId = response.data.gameId,
+                    this.vocabulary = response.data.vocabulary
+                });
+            },
             typing: function(index) {
                 
                 if(this.activeInput != null){
@@ -75,6 +80,9 @@
                     
                 }
             },
+            updateGame: function () {
+                //update results
+            }
         }
     }
 </script>

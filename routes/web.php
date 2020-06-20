@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\UpdateBoardEvent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,4 +23,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/game', 'GameController@index')->name('game');
-Route::post('/game/update', 'GameController@update')->name('game.update');
+Route::post('/game/create', 'GameController@create')->name('game.create');
+//Route::post('/game/update', 'GameController@update')->name('game.update');
+
+Route::get('/vocabulary/{count}', 'VocabularyBaseController@getVocabularyJSON')->name('vocabulary.get-vocabulary-json');

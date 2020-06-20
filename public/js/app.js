@@ -1931,24 +1931,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      vocabulary: [{
-        id: 1,
-        value: 'play'
-      }, {
-        id: 2,
-        value: 'match'
-      }, {
-        id: 3,
-        value: 'computer'
-      }, {
-        id: 4,
-        value: 'college'
-      }, {
-        id: 5,
-        value: 'university'
-      }],
+      gameId: null,
+      vocabulary: null,
       activeInput: null
     };
+  },
+  created: function created() {
+    this.getVocabularyList();
   },
   mounted: function mounted() {
     window.Echo.channel('board-channel').listen('UpdateBoardEvent', function (event) {
@@ -1956,6 +1945,15 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    getVocabularyList: function getVocabularyList() {
+      var _this = this;
+
+      axios.post('game/create', {
+        count: "12"
+      }).then(function (response) {
+        _this.gameId = response.data.gameId, _this.vocabulary = response.data.vocabulary;
+      });
+    },
     typing: function typing(index) {
       if (this.activeInput != null) {
         document.getElementById('voc' + this.activeInput).disabled = true;
@@ -1988,6 +1986,8 @@ __webpack_require__.r(__webpack_exports__);
       }) === 0) {//Correct
       } else {//Incorrect
         }
+    },
+    updateGame: function updateGame() {//update results
     }
   }
 });
