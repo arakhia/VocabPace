@@ -17,7 +17,10 @@
 <script>
     export default {
         mounted() {
-            console.log('Component mounted.')
+            window.Echo.channel('board-channel')
+            .listen('UpdateBoardEvent', (event) => {
+                console.log(event);
+            });
         }
     }
 </script>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\UpdateBoardEvent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    //broadcast(new UpdateBoardEvent('some message'));
     return view('welcome');
 });
 
