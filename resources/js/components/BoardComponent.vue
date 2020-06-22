@@ -7,8 +7,8 @@
 
                     <div class="card-body row" style="align-items: center; align-content: center;">
                         <div class="vocabulary-container" v-for="(vocab, index) in vocabulary" :key="index" >
-                            <input class="vocabulary" type="text"  :value="vocab.value" :id="'voc'+index" v-on:click="typing(index)">
-                            <progress class="m-progress" :id="index" :ref="index" value="0" max="4"> </progress>
+                            <input class="vocabulary" type="text"  :value="vocab.value" :id="'voc'+vocab.id" v-on:click="typing(vocab.id)">
+                            <progress class="m-progress" :id="vocab.id" :ref="index" value="0" max="4"> </progress>
                         </div>
                     </div>
 
@@ -73,11 +73,11 @@
             isAnswerCorrect: function(vocabularyIndex)
             {
                 var answer = document.getElementById('voc'+vocabularyIndex).value;
-                var originalVocabulary = this.vocabulary[vocabularyIndex].value;
+                var originalVocabulary = this.vocabulary.find(item=>item.id === vocabularyIndex).value;
                 if(originalVocabulary.localeCompare(answer, undefined, {sensitivity: 'accent'}) === 0){
-                    this.updateGame(this.vocabulary[vocabularyIndex].id, answer, 1);
+                    this.updateGame(vocabularyIndex, answer, 1);
                 } else {
-                    this.updateGame(this.vocabulary[vocabularyIndex].id, answer, 0);
+                    this.updateGame(vocabularyIndex, answer, 0);
                 }
             },
             updateGame: function (vocabularyId, answer, status) {

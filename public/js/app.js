@@ -1978,14 +1978,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     isAnswerCorrect: function isAnswerCorrect(vocabularyIndex) {
       var answer = document.getElementById('voc' + vocabularyIndex).value;
-      var originalVocabulary = this.vocabulary[vocabularyIndex].value;
+      var originalVocabulary = this.vocabulary.find(function (item) {
+        return item.id === vocabularyIndex;
+      }).value;
 
       if (originalVocabulary.localeCompare(answer, undefined, {
         sensitivity: 'accent'
       }) === 0) {
-        this.updateGame(this.vocabulary[vocabularyIndex].id, answer, 1);
+        this.updateGame(vocabularyIndex, answer, 1);
       } else {
-        this.updateGame(this.vocabulary[vocabularyIndex].id, answer, 0);
+        this.updateGame(vocabularyIndex, answer, 0);
       }
     },
     updateGame: function updateGame(vocabularyId, answer, status) {
@@ -44275,11 +44277,11 @@ var render = function() {
                 [
                   _c("input", {
                     staticClass: "vocabulary",
-                    attrs: { type: "text", id: "voc" + index },
+                    attrs: { type: "text", id: "voc" + vocab.id },
                     domProps: { value: vocab.value },
                     on: {
                       click: function($event) {
-                        return _vm.typing(index)
+                        return _vm.typing(vocab.id)
                       }
                     }
                   }),
@@ -44288,7 +44290,7 @@ var render = function() {
                     ref: index,
                     refInFor: true,
                     staticClass: "m-progress",
-                    attrs: { id: index, value: "0", max: "4" }
+                    attrs: { id: vocab.id, value: "0", max: "4" }
                   })
                 ]
               )
