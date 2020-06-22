@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class GameResults extends Model
 {
+    protected $fillable = [
+        'game_id', 'vocabulary_id', 'player_id', 'answer', 'status'
+    ];
+    
     public function game()
     {
         return $this->belongsTo('App\Game', 'game_id', 'id');

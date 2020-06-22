@@ -27,6 +27,15 @@ class GameController extends Controller
         return view('game.board');
     }
 
+    public function game($id)
+    {
+        $game = Game::findOrFail($id);
+        return $result = [
+            'gameId' => $game->id,
+            'vocabulary'=> $this->vocabularyBaseController->getVocabularyJSON(15)
+        ];
+    }
+
     public function create(Request $request)
     {
         $game = new Game();
@@ -41,6 +50,13 @@ class GameController extends Controller
 
     public function update(Request $request)
     {
-        //broadcast(new UpdateBoardEvent('updating'));
+        $game = Game::findOrFail($request->get('gameId'));
+        $game->result()->create([
+            'game_id' => $game->id,
+            'vocabulary_id' => $request->get('vocabularyId'),
+            'player_id' => $request->get('playerId'),
+            'answer' => $request->get('answer'),
+            'status' => $request->get('status'),
+        ]);
     }
 }

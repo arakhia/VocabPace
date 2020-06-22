@@ -1933,7 +1933,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       gameId: null,
       vocabulary: null,
-      activeInput: null
+      activeInput: null,
+      available: true
     };
   },
   created: function created() {
@@ -1948,9 +1949,7 @@ __webpack_require__.r(__webpack_exports__);
     getVocabularyList: function getVocabularyList() {
       var _this = this;
 
-      axios.post('game/create', {
-        count: "12"
-      }).then(function (response) {
+      axios.get('game/10').then(function (response) {
         _this.gameId = response.data.gameId, _this.vocabulary = response.data.vocabulary;
       });
     },
@@ -1983,11 +1982,21 @@ __webpack_require__.r(__webpack_exports__);
 
       if (originalVocabulary.localeCompare(answer, undefined, {
         sensitivity: 'accent'
-      }) === 0) {//Correct
-      } else {//Incorrect
-        }
+      }) === 0) {
+        this.updateGame(this.vocabulary[vocabularyIndex].id, answer, 1);
+      } else {
+        this.updateGame(this.vocabulary[vocabularyIndex].id, answer, 0);
+      }
     },
-    updateGame: function updateGame() {//update results
+    updateGame: function updateGame(vocabularyId, answer, status) {
+      //update results
+      axios.post('game/update', {
+        gameId: this.gameId,
+        vocabularyId: vocabularyId,
+        playerId: window.userId,
+        answer: answer,
+        status: status
+      });
     }
   }
 });

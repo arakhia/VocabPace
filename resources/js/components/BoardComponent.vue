@@ -25,6 +25,7 @@
                 gameId: null,
                 vocabulary: null,
                 activeInput: null,
+                available: true,
             }
         },
         created() {
@@ -38,7 +39,7 @@
         },
         methods: {
             getVocabularyList: function(){
-                axios.post('game/create', {count: "12"})
+                axios.get('game/10')
                 .then(response => {
                     this.gameId = response.data.gameId,
                     this.vocabulary = response.data.vocabulary
@@ -74,14 +75,20 @@
                 var answer = document.getElementById('voc'+vocabularyIndex).value;
                 var originalVocabulary = this.vocabulary[vocabularyIndex].value;
                 if(originalVocabulary.localeCompare(answer, undefined, {sensitivity: 'accent'}) === 0){
-                    //Correct
+                    this.updateGame(this.vocabulary[vocabularyIndex].id, answer, 1);
                 } else {
-                    //Incorrect
-                    
+                    this.updateGame(this.vocabulary[vocabularyIndex].id, answer, 0);
                 }
             },
-            updateGame: function () {
+            updateGame: function (vocabularyId, answer, status) {
                 //update results
+                axios.post('game/update', {
+                    gameId: this.gameId,
+                    vocabularyId: vocabularyId,
+                    playerId: window.userId,
+                    answer: answer,
+                    status: status,
+                });
             }
         }
     }
