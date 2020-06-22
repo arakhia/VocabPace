@@ -34,7 +34,9 @@
         mounted() {
             window.Echo.channel('board-channel')
             .listen('UpdateBoardEvent', (event) => {
-                console.log(event);
+                if(event.data.action == 'typing' && event.data.user != window.userId){
+                    document.getElementById('voc'+event.data.resource).disabled = true;
+                }
             });
         },
         methods: {
@@ -46,7 +48,9 @@
                 });
             },
             typing: function(index) {
-                
+
+                this.updateGame(index);
+
                 if(this.activeInput != null){
                     document.getElementById('voc'+this.activeInput).disabled = true;
                 }
@@ -75,9 +79,9 @@
                 var answer = document.getElementById('voc'+vocabularyIndex).value;
                 var originalVocabulary = this.vocabulary.find(item=>item.id === vocabularyIndex).value;
                 if(originalVocabulary.localeCompare(answer, undefined, {sensitivity: 'accent'}) === 0){
-                    this.updateGame(vocabularyIndex, answer, 1);
+                    //this.updateGame(vocabularyIndex, answer, 1);
                 } else {
-                    this.updateGame(vocabularyIndex, answer, 0);
+                    //this.updateGame(vocabularyIndex, answer, 0);
                 }
             },
             updateGame: function (vocabularyId, answer, status) {
@@ -89,7 +93,7 @@
                     answer: answer,
                     status: status,
                 });
-            }
+            },
         }
     }
 </script>

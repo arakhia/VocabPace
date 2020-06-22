@@ -1942,7 +1942,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     window.Echo.channel('board-channel').listen('UpdateBoardEvent', function (event) {
-      console.log(event);
+      if (event.data.action == 'typing' && event.data.user != window.userId) {
+        document.getElementById('voc' + event.data.resource).disabled = true;
+      }
     });
   },
   methods: {
@@ -1954,6 +1956,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     typing: function typing(index) {
+      this.updateGame(index);
+
       if (this.activeInput != null) {
         document.getElementById('voc' + this.activeInput).disabled = true;
       }
@@ -1984,11 +1988,9 @@ __webpack_require__.r(__webpack_exports__);
 
       if (originalVocabulary.localeCompare(answer, undefined, {
         sensitivity: 'accent'
-      }) === 0) {
-        this.updateGame(vocabularyIndex, answer, 1);
-      } else {
-        this.updateGame(vocabularyIndex, answer, 0);
-      }
+      }) === 0) {//this.updateGame(vocabularyIndex, answer, 1);
+      } else {//this.updateGame(vocabularyIndex, answer, 0);
+        }
     },
     updateGame: function updateGame(vocabularyId, answer, status) {
       //update results

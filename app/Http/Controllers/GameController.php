@@ -55,8 +55,17 @@ class GameController extends Controller
             'game_id' => $game->id,
             'vocabulary_id' => $request->get('vocabularyId'),
             'player_id' => $request->get('playerId'),
-            'answer' => $request->get('answer'),
-            'status' => $request->get('status'),
         ]);
+        broadcast(new UpdateBoardEvent(
+            ['action' => 'typing',
+             'resource' => $request->get('vocabularyId'),
+             'user' => $request->get('playerId'),
+            ]
+        ));
+    }
+
+    public function submitAnswere(Request $request)
+    {
+        # code...
     }
 }
