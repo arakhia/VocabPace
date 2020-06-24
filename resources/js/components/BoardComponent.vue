@@ -1,10 +1,17 @@
 <template>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-10 board-container">
+                <div class="players-pane">
+                    <div style="float: left;">
+                        <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
+                    </div>
+                    <div style="float: right;">
+                        <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a4aaa7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
+                    </div>
+                </div>
                 <div class="card" align="center">
                     <div  class="card-header" >Vocabulary Board</div>
-
                     <div class="card-body row" style="align-items: center; align-content: center;">
                         <div class="vocabulary-container" v-for="(vocab, index) in vocabulary" :key="index" >
                             <input class="vocabulary" type="text"  :value="vocab.value" :id="'voc'+vocab.id" v-on:click="typing(vocab.id)">
@@ -41,24 +48,24 @@
         },
         methods: {
             getVocabularyList: function(){
-                axios.get('game/10')
+                axios.get('game/13')
                 .then(response => {
                     this.gameId = response.data.gameId,
                     this.vocabulary = response.data.vocabulary
                 });
             },
             typing: function(index) {
-
+                
                 this.updateGame(index);
-
                 if(this.activeInput != null){
-                    document.getElementById('voc'+this.activeInput).disabled = true;
+                    this.isAnswerCorrect(index);
+                    document.getElementById('voc'+index).disabled = true;
                 }
                 this.activeInput = index;
                 this.startProgressbar(index, 4);
             },
-            startProgressbar: function(id, timer){
-                
+            startProgressbar: function(id, timer)
+            {    
                 var self = this;
                 document.getElementById('voc'+id).value = '';
                 
@@ -79,12 +86,18 @@
                 var answer = document.getElementById('voc'+vocabularyIndex).value;
                 var originalVocabulary = this.vocabulary.find(item=>item.id === vocabularyIndex).value;
                 if(originalVocabulary.localeCompare(answer, undefined, {sensitivity: 'accent'}) === 0){
-                    //this.updateGame(vocabularyIndex, answer, 1);
+                    this.updateGame(vocabularyIndex, answer, 1);
                 } else {
-                    //this.updateGame(vocabularyIndex, answer, 0);
+                    this.updateGame(vocabularyIndex, answer, 0);
                 }
             },
-            updateGame: function (vocabularyId, answer, status) {
+            createGame: function () 
+            {
+                //update results
+                axios.post('game/create');
+            },
+            updateGame: function (vocabularyId, answer, status) 
+            {
                 //update results
                 axios.post('game/update', {
                     gameId: this.gameId,
@@ -116,5 +129,11 @@
 .m-progress {
     height: 0.3em; 
     color: red;
+}
+.board-container {
+    display: grid;
+}
+.players-pane {
+    margin-bottom: 0.5em;
 }
 </style>

@@ -30,9 +30,9 @@ class GameController extends Controller
     public function game($id)
     {
         $game = Game::findOrFail($id);
-        return $result = [
+        return [
             'gameId' => $game->id,
-            'vocabulary'=> $this->vocabularyBaseController->getVocabularyJSON(15)
+            'vocabulary'=> json_decode($game->vocabulary)
         ];
     }
 
@@ -42,10 +42,14 @@ class GameController extends Controller
         $game->player_01_id = Auth::user()->id;
         $game->player_02_id = Auth::user()->id;
         $game->save();
-        return $result = [
-            'gameId' => $game->id,
-            'vocabulary'=> $this->vocabularyBaseController->getVocabularyJSON($request->get('count'))
-        ];
+        
+        $vocabulary = $this->vocabularyBaseController->getVocabularyJSON(15);
+        foreach($vocabulary as $item){
+            $game->result()->create([
+                'game_id' => $game->id,
+                'vocabulary_id' => $item->id,
+            ]);
+        }
     }
 
     public function update(Request $request)

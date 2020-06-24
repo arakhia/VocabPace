@@ -1928,6 +1928,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1951,7 +1958,7 @@ __webpack_require__.r(__webpack_exports__);
     getVocabularyList: function getVocabularyList() {
       var _this = this;
 
-      axios.get('game/10').then(function (response) {
+      axios.get('game/13').then(function (response) {
         _this.gameId = response.data.gameId, _this.vocabulary = response.data.vocabulary;
       });
     },
@@ -1959,7 +1966,8 @@ __webpack_require__.r(__webpack_exports__);
       this.updateGame(index);
 
       if (this.activeInput != null) {
-        document.getElementById('voc' + this.activeInput).disabled = true;
+        this.isAnswerCorrect(index);
+        document.getElementById('voc' + index).disabled = true;
       }
 
       this.activeInput = index;
@@ -1988,9 +1996,15 @@ __webpack_require__.r(__webpack_exports__);
 
       if (originalVocabulary.localeCompare(answer, undefined, {
         sensitivity: 'accent'
-      }) === 0) {//this.updateGame(vocabularyIndex, answer, 1);
-      } else {//this.updateGame(vocabularyIndex, answer, 0);
-        }
+      }) === 0) {
+        this.updateGame(vocabularyIndex, answer, 1);
+      } else {
+        this.updateGame(vocabularyIndex, answer, 0);
+      }
+    },
+    createGame: function createGame() {
+      //update results
+      axios.post('game/create');
     },
     updateGame: function updateGame(vocabularyId, answer, status) {
       //update results
@@ -6485,7 +6499,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.title[data-v-a7da2f3c] {\n    align-self: center;\n}\n.vocabulary-container[data-v-a7da2f3c] {\n    margin: 0.5em;\n    display: grid;\n}\n.vocabulary[data-v-a7da2f3c] {\n    text-align: center;\n    font-style: italic;\n    font-weight: bold;\n    text-transform: uppercase;\n}\n.m-progress[data-v-a7da2f3c] {\n    height: 0.3em; \n    color: red;\n}\n", ""]);
+exports.push([module.i, "\n.title[data-v-a7da2f3c] {\n    align-self: center;\n}\n.vocabulary-container[data-v-a7da2f3c] {\n    margin: 0.5em;\n    display: grid;\n}\n.vocabulary[data-v-a7da2f3c] {\n    text-align: center;\n    font-style: italic;\n    font-weight: bold;\n    text-transform: uppercase;\n}\n.m-progress[data-v-a7da2f3c] {\n    height: 0.3em; \n    color: red;\n}\n.board-container[data-v-a7da2f3c] {\n    display: grid;\n}\n.players-pane[data-v-a7da2f3c] {\n    margin-bottom: 0.5em;\n}\n", ""]);
 
 // exports
 
@@ -44257,7 +44271,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-10" }, [
+      _c("div", { staticClass: "col-md-10 board-container" }, [
+        _vm._m(0),
+        _vm._v(" "),
         _c("div", { staticClass: "card", attrs: { align: "center" } }, [
           _c("div", { staticClass: "card-header" }, [
             _vm._v("Vocabulary Board")
@@ -44304,7 +44320,40 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "players-pane" }, [
+      _c("div", { staticStyle: { float: "left" } }, [
+        _c("img", {
+          staticClass: "rounded-circle",
+          attrs: {
+            src:
+              "https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g",
+            height: "50em",
+            width: "50em",
+            alt: "test image"
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticStyle: { float: "right" } }, [
+        _c("img", {
+          staticClass: "rounded-circle",
+          attrs: {
+            src:
+              "https://www.gravatar.com/avatar/a3175a4aaa7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g",
+            height: "50em",
+            width: "50em",
+            alt: "test image"
+          }
+        })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
