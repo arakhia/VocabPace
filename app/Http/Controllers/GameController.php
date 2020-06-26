@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\UpdateBoardEvent;
 use App\Game;
+use App\GameResults;
 use App\VocabularyBase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,8 @@ class GameController extends Controller
         $game = Game::findOrFail($id);
         return [
             'gameId' => $game->id,
-            'vocabulary'=> json_decode($game->vocabulary)
+            'vocabulary'=> json_decode($game->vocabulary),
+            'results' => json_decode($game->result)
         ];
     }
 
@@ -55,21 +57,14 @@ class GameController extends Controller
     public function update(Request $request)
     {
         $game = Game::findOrFail($request->get('gameId'));
-        $game->result()->create([
-            'game_id' => $game->id,
-            'vocabulary_id' => $request->get('vocabularyId'),
-            'player_id' => $request->get('playerId'),
-        ]);
-        broadcast(new UpdateBoardEvent(
-            ['action' => 'typing',
-             'resource' => $request->get('vocabularyId'),
-             'user' => $request->get('playerId'),
-            ]
-        ));
-    }
+        $result = GameResults::where('vocabulary_id', $request->get('vocabularyId'))->firstOrFail();
+        $result->player_id = $request->get('playerId');
+        $result->answer = $request->get('answer');
+        $result->status = $request->get('status');
+        $result->save();
 
-    public function submitAnswere(Request $request)
-    {
-        # code...
+        broadcast(new UpdateBoardEvent([
+            'results' => json_decode($game->result),
+        ]));
     }
 }

@@ -1935,35 +1935,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       gameId: null,
       vocabulary: null,
+      results: null,
       activeInput: null,
-      available: true
+      available: true,
+      playerId: window.userId
     };
   },
   created: function created() {
     this.getVocabularyList();
   },
   mounted: function mounted() {
+    var _this = this;
+
     window.Echo.channel('board-channel').listen('UpdateBoardEvent', function (event) {
-      if (event.data.action == 'typing' && event.data.user != window.userId) {
-        document.getElementById('voc' + event.data.resource).disabled = true;
-      }
+      _this.results = event.data.results;
     });
   },
   methods: {
+    isDisabled: function isDisabled(vocabulary_id) {
+      var player_id = this.results.find(function (item) {
+        return item.vocabulary_id === vocabulary_id;
+      }).player_id;
+      var answer = this.results.find(function (item) {
+        return item.vocabulary_id === vocabulary_id;
+      }).answer;
+
+      if (player_id == window.userId && answer != null) {
+        return true;
+      } else if (player_id != null && player_id != window.userId) {
+        return true;
+      }
+
+      return false;
+    },
     getVocabularyList: function getVocabularyList() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('game/13').then(function (response) {
-        _this.gameId = response.data.gameId, _this.vocabulary = response.data.vocabulary;
+        _this2.gameId = response.data.gameId, _this2.vocabulary = response.data.vocabulary, _this2.results = response.data.results;
       });
     },
     typing: function typing(index) {
       this.updateGame(index);
+
+      if (index == this.activeInput) {
+        return;
+      }
 
       if (this.activeInput != null) {
         this.isAnswerCorrect(index);
@@ -6499,7 +6529,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.title[data-v-a7da2f3c] {\n    align-self: center;\n}\n.vocabulary-container[data-v-a7da2f3c] {\n    margin: 0.5em;\n    display: grid;\n}\n.vocabulary[data-v-a7da2f3c] {\n    text-align: center;\n    font-style: italic;\n    font-weight: bold;\n    text-transform: uppercase;\n}\n.m-progress[data-v-a7da2f3c] {\n    height: 0.3em; \n    color: red;\n}\n.board-container[data-v-a7da2f3c] {\n    display: grid;\n}\n.players-pane[data-v-a7da2f3c] {\n    margin-bottom: 0.5em;\n}\n", ""]);
+exports.push([module.i, "\n.title[data-v-a7da2f3c] {\n    align-self: center;\n}\n.vocabulary-container[data-v-a7da2f3c] {\n    margin: 0.5em;\n    display: grid;\n}\n.vocabulary[data-v-a7da2f3c] {\n    text-align: center;\n    font-style: italic;\n    font-weight: bold;\n    text-transform: uppercase;\n}\n.m-progress[data-v-a7da2f3c] {\n    height: 0.3em; \n    color: red;\n}\n.board-container[data-v-a7da2f3c] {\n    display: grid;\n}\n.players-container[data-v-a7da2f3c] {\n    display: flex; \n    justify-content: space-between;\n}\n.player-pane[data-v-a7da2f3c] {\n    margin-bottom: 0.5em;\n    display: flex;\n    flex-direction: column;\n    text-align: center;\n    font-style: oblique;\n    font-weight: bold;\n}\n.current-results[data-v-a7da2f3c] {\n    font-weight: bold;\n    font-size: 200%;\n}\n", ""]);
 
 // exports
 
@@ -44272,7 +44302,64 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-10 board-container" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "players-container" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "current-results" }, [
+            _vm.results && _vm.playerId
+              ? _c("span", [
+                  _vm._v(
+                    _vm._s(
+                      _vm.results.filter(function(item) {
+                        return (
+                          item.player_id == _vm.playerId && item.status == 1
+                        )
+                      }).length
+                    )
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "svg",
+              {
+                staticClass: "bi bi-lightning-fill",
+                attrs: {
+                  width: "1em",
+                  height: "1em",
+                  viewBox: "0 0 16 16",
+                  fill: "currentColor",
+                  xmlns: "http://www.w3.org/2000/svg"
+                }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    "fill-rule": "evenodd",
+                    d:
+                      "M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _vm.results && _vm.playerId
+              ? _c("span", [
+                  _vm._v(
+                    _vm._s(
+                      _vm.results.filter(function(item) {
+                        return (
+                          item.player_id != _vm.playerId && item.status == 1
+                        )
+                      }).length
+                    )
+                  )
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _vm._m(1)
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "card", attrs: { align: "center" } }, [
           _c("div", { staticClass: "card-header" }, [
@@ -44295,7 +44382,11 @@ var render = function() {
                 [
                   _c("input", {
                     staticClass: "vocabulary",
-                    attrs: { type: "text", id: "voc" + vocab.id },
+                    attrs: {
+                      type: "text",
+                      id: "voc" + vocab.id,
+                      disabled: _vm.isDisabled(vocab.id)
+                    },
                     domProps: { value: vocab.value },
                     on: {
                       click: function($event) {
@@ -44325,32 +44416,38 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "players-pane" }, [
-      _c("div", { staticStyle: { float: "left" } }, [
-        _c("img", {
-          staticClass: "rounded-circle",
-          attrs: {
-            src:
-              "https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g",
-            height: "50em",
-            width: "50em",
-            alt: "test image"
-          }
-        })
-      ]),
+    return _c("div", { staticClass: "player-pane" }, [
+      _c("img", {
+        staticClass: "rounded-circle",
+        attrs: {
+          src:
+            "https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g",
+          height: "50em",
+          width: "50em",
+          alt: "test image"
+        }
+      }),
       _vm._v(" "),
-      _c("div", { staticStyle: { float: "right" } }, [
-        _c("img", {
-          staticClass: "rounded-circle",
-          attrs: {
-            src:
-              "https://www.gravatar.com/avatar/a3175a4aaa7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g",
-            height: "50em",
-            width: "50em",
-            alt: "test image"
-          }
-        })
-      ])
+      _c("span", [_vm._v("User")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "player-pane" }, [
+      _c("img", {
+        staticClass: "rounded-circle",
+        attrs: {
+          src:
+            "https://www.gravatar.com/avatar/a3175a4aaa7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g",
+          height: "50em",
+          width: "50em",
+          alt: "test image"
+        }
+      }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Admin")])
     ])
   }
 ]
