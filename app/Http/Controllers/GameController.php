@@ -28,6 +28,11 @@ class GameController extends Controller
         return view('game.board');
     }
 
+    public function list()
+    {
+        return view('game.list');
+    }
+
     public function game($id)
     {
         $game = Game::findOrFail($id);

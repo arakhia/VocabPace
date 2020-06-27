@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('board-component', require('./components/BoardComponent.vue').default);
 Vue.component('guests', require('./components/GuestsSideBarComponent.vue').default);
+Vue.component('games-list', require('./components/GamesListComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

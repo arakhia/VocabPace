@@ -23,6 +23,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/game/{id}', 'GameController@game')->name('game.view');
+Route::get('/games/live', 'GameController@list')->name('game.list');
 Route::get('/game', 'GameController@index')->name('game');
 Route::post('/game/create', 'GameController@create')->name('game.create');
 Route::post('/game/update', 'GameController@update')->name('game.update');
