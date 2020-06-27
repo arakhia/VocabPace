@@ -33,6 +33,14 @@ class GameController extends Controller
         return view('game.list');
     }
 
+    public function listJson()
+    {
+        $games = Game::where('status', 1)->withCount('vocabulary')->get();
+        return [
+            'games' => json_decode($games)
+        ];
+    }
+
     public function game($id)
     {
         $game = Game::findOrFail($id);

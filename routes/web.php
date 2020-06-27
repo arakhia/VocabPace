@@ -29,3 +29,5 @@ Route::post('/game/create', 'GameController@create')->name('game.create');
 Route::post('/game/update', 'GameController@update')->name('game.update');
 
 Route::get('/vocabulary/{count}', 'VocabularyBaseController@getVocabularyJSON')->name('vocabulary.get-vocabulary-json');
+//json endpoints
+Route::get('json/games/list', 'GameController@listJson')->name('game.list-json');

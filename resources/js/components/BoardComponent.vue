@@ -47,7 +47,6 @@
         },
         created() {
             this.getVocabularyList();
-            
         },
         mounted() {
             window.Echo.channel('board-channel')
