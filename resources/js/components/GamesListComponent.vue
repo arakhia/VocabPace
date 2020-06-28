@@ -3,7 +3,7 @@
         <h1><b>Live Competitions</b></h1>
         <ol class="games">
             <li class="game" v-for="(game, index) in games" :key="index"> 
-                <a class="game_link" v-on:click="openGame(game.id)">
+                <router-link class="game_link" :to="`/game/${game.id}`" >
                     <div class="game_content game_content--lhs">
                         <h2 class="game_title">Game</h2>
                         <div class="row game_players" style="display: flex; justify-content: space-between;">
@@ -46,7 +46,7 @@
                             <p>{{game.vocabulary_count}} Vocabulary</p><time>{{getRelativeTime(game.created_at)}}</time>
                         </div>
                     </div>
-                </a>
+                </router-link>
             </li>
         </ol>
     </div>
@@ -59,11 +59,13 @@
             }
         },
         created: function() {
+            
+            
             this.getGamesList();
         },
         methods: {
             getGamesList: function(){
-                axios.get('/json/games/list')
+                axios.get('/api/games/list')
                 .then(response => {
                     this.games = response.data.games
                 });

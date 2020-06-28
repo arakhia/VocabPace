@@ -66,7 +66,7 @@
                 return false;
             },
             getVocabularyList: function(){
-                axios.get('game/13')
+                axios.get('api/game/'+this.$route.params.id)
                 .then(response => {
                     this.gameId = response.data.gameId,
                     this.vocabulary = response.data.vocabulary,

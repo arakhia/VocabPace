@@ -13,7 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Auth::routes();
+Route::get('/{any}', 'SignlePageController@index')->where('any', '^(?!api).*$');
+//Route::get('/game/{id}', 'GameController@game')->name('game.view');
+//Route::get('/games/live', 'GameController@list')->name('game.list');
+
+
+/*Route::get('/', function () {
     //broadcast(new UpdateBoardEvent('some message'));
     return view('welcome');
 });
@@ -27,7 +33,6 @@ Route::get('/games/live', 'GameController@list')->name('game.list');
 Route::get('/game', 'GameController@index')->name('game');
 Route::post('/game/create', 'GameController@create')->name('game.create');
 Route::post('/game/update', 'GameController@update')->name('game.update');
-
-Route::get('/vocabulary/{count}', 'VocabularyBaseController@getVocabularyJSON')->name('vocabulary.get-vocabulary-json');
+*/
+//Route::get('/vocabulary/{count}', 'VocabularyBaseController@getVocabularyJSON')->name('vocabulary.get-vocabulary-json');
 //json endpoints
-Route::get('json/games/list', 'GameController@listJson')->name('game.list-json');

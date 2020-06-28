@@ -4,9 +4,26 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+//const { default: VueRouter } = require('vue-router');
+import BoardComponent from './components/BoardComponent';
+import GamesListComponent from './components/GamesListComponent';
 require('./bootstrap');
 
+
+
 window.Vue = require('vue');
+
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+
+let routes = [
+    {path: '/', component: GamesListComponent},
+    {path: '/game/:id', name: 'game', component: BoardComponent}
+];
+
+const router = new VueRouter({
+    routes
+})
 
 /**
  * The following block of code may be used to automatically register your
@@ -30,6 +47,9 @@ Vue.component('games-list', require('./components/GamesListComponent.vue').defau
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+
 const app = new Vue({
     el: '#app',
+    router
 });
