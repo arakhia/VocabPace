@@ -1,35 +1,38 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10 board-container">
-                <div class="players-container">
-                    <div class="player-pane">
-                            <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
-                            <span>User</span>
+    <div class="row" style="width: 100%;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10 board-container">
+                    <div class="players-container">
+                        <div class="player-pane">
+                                <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
+                                <span>User</span>
+                        </div>
+                        <div class="current-results">
+                            <span v-if="results&&playerId" >{{results.filter(item=>item.player_id == playerId && item.status == 1).length}}</span>
+                            <svg class="bi bi-lightning-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
+                            </svg>
+                            <span v-if="results&&playerId" >{{results.filter(item=>item.player_id != playerId && item.status == 1).length}}</span>
+                        </div>
+                        <div class="player-pane">
+                            <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a4aaa7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
+                            <span>Admin</span>
+                        </div>
                     </div>
-                    <div class="current-results">
-                        <span v-if="results&&playerId" >{{results.filter(item=>item.player_id == playerId && item.status == 1).length}}</span>
-                        <svg class="bi bi-lightning-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
-                        </svg>
-                        <span v-if="results&&playerId" >{{results.filter(item=>item.player_id != playerId && item.status == 1).length}}</span>
-                    </div>
-                    <div class="player-pane">
-                        <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a4aaa7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
-                        <span>Admin</span>
-                    </div>
-                </div>
-                <div class="card" align="center">
-                    <div  class="card-header" >Vocabulary Board</div>
-                    <div class="card-body row" style="align-items: center; align-content: center;">
-                        <div class="vocabulary-container" v-for="(vocab, index) in vocabulary" :key="index" >
-                            <input class="vocabulary" type="text"  :value="vocab.value" :id="'voc'+vocab.id" v-on:click="typing(vocab.id)" :disabled="isDisabled(vocab.id)">
-                            <progress class="m-progress" :id="vocab.id" :ref="index" value="0" max="4"> </progress>
+                    <div class="card" align="center">
+                        <div  class="card-header" >Vocabulary Board</div>
+                        <div class="card-body row" style="align-items: center; align-content: center;">
+                            <div class="vocabulary-container" v-for="(vocab, index) in vocabulary" :key="index" >
+                                <input class="vocabulary" type="text"  :value="vocab.value" :id="'voc'+vocab.id" v-on:click="typing(vocab.id)" :disabled="isDisabled(vocab.id)">
+                                <progress class="m-progress" :id="vocab.id" :ref="index" value="0" max="4"> </progress>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <guests></guests>
     </div>
 </template>
 
@@ -121,7 +124,7 @@
             updateGame: function (vocabularyId, answer, status) 
             {
                 //update results
-                axios.post('game/update', {
+                axios.post('api/game/update', {
                     gameId: this.gameId,
                     vocabularyId: vocabularyId,
                     playerId: window.userId,

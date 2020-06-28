@@ -18,6 +18,22 @@
     </div>
 </template>
 
+<script>
+    export default {
+        data() {
+            return {
+                
+            }
+        },
+        created() {
+            
+        },
+        methods: {
+
+        },
+    }
+</script>
+
 <style scoped>
 .guests-container {
     margin-top: 5%;

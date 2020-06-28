@@ -1943,6 +1943,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2038,7 +2041,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateGame: function updateGame(vocabularyId, answer, status) {
       //update results
-      axios.post('game/update', {
+      axios.post('api/game/update', {
         gameId: this.gameId,
         vocabularyId: vocabularyId,
         playerId: window.userId,
@@ -2173,6 +2176,45 @@ __webpack_require__.r(__webpack_exports__);
       window.location.href = "/game";
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GuestsSideBarComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/GuestsSideBarComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {};
+  },
+  created: function created() {},
+  methods: {}
 });
 
 /***/ }),
@@ -65679,117 +65721,126 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-10 board-container" }, [
-        _c("div", { staticClass: "players-container" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "current-results" }, [
-            _vm.results && _vm.playerId
-              ? _c("span", [
-                  _vm._v(
-                    _vm._s(
-                      _vm.results.filter(function(item) {
-                        return (
-                          item.player_id == _vm.playerId && item.status == 1
+  return _c(
+    "div",
+    { staticClass: "row", staticStyle: { width: "100%" } },
+    [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row justify-content-center" }, [
+          _c("div", { staticClass: "col-md-10 board-container" }, [
+            _c("div", { staticClass: "players-container" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "current-results" }, [
+                _vm.results && _vm.playerId
+                  ? _c("span", [
+                      _vm._v(
+                        _vm._s(
+                          _vm.results.filter(function(item) {
+                            return (
+                              item.player_id == _vm.playerId && item.status == 1
+                            )
+                          }).length
                         )
-                      }).length
-                    )
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "svg",
-              {
-                staticClass: "bi bi-lightning-fill",
-                attrs: {
-                  width: "1em",
-                  height: "1em",
-                  viewBox: "0 0 16 16",
-                  fill: "currentColor",
-                  xmlns: "http://www.w3.org/2000/svg"
-                }
-              },
-              [
-                _c("path", {
-                  attrs: {
-                    "fill-rule": "evenodd",
-                    d:
-                      "M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"
-                  }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _vm.results && _vm.playerId
-              ? _c("span", [
-                  _vm._v(
-                    _vm._s(
-                      _vm.results.filter(function(item) {
-                        return (
-                          item.player_id != _vm.playerId && item.status == 1
-                        )
-                      }).length
-                    )
-                  )
-                ])
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _vm._m(1)
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card", attrs: { align: "center" } }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Vocabulary Board")
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "card-body row",
-              staticStyle: {
-                "align-items": "center",
-                "align-content": "center"
-              }
-            },
-            _vm._l(_vm.vocabulary, function(vocab, index) {
-              return _c(
-                "div",
-                { key: index, staticClass: "vocabulary-container" },
-                [
-                  _c("input", {
-                    staticClass: "vocabulary",
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "svg",
+                  {
+                    staticClass: "bi bi-lightning-fill",
                     attrs: {
-                      type: "text",
-                      id: "voc" + vocab.id,
-                      disabled: _vm.isDisabled(vocab.id)
-                    },
-                    domProps: { value: vocab.value },
-                    on: {
-                      click: function($event) {
-                        return _vm.typing(vocab.id)
-                      }
+                      width: "1em",
+                      height: "1em",
+                      viewBox: "0 0 16 16",
+                      fill: "currentColor",
+                      xmlns: "http://www.w3.org/2000/svg"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("progress", {
-                    ref: index,
-                    refInFor: true,
-                    staticClass: "m-progress",
-                    attrs: { id: vocab.id, value: "0", max: "4" }
-                  })
-                ]
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        "fill-rule": "evenodd",
+                        d:
+                          "M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.results && _vm.playerId
+                  ? _c("span", [
+                      _vm._v(
+                        _vm._s(
+                          _vm.results.filter(function(item) {
+                            return (
+                              item.player_id != _vm.playerId && item.status == 1
+                            )
+                          }).length
+                        )
+                      )
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card", attrs: { align: "center" } }, [
+              _c("div", { staticClass: "card-header" }, [
+                _vm._v("Vocabulary Board")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "card-body row",
+                  staticStyle: {
+                    "align-items": "center",
+                    "align-content": "center"
+                  }
+                },
+                _vm._l(_vm.vocabulary, function(vocab, index) {
+                  return _c(
+                    "div",
+                    { key: index, staticClass: "vocabulary-container" },
+                    [
+                      _c("input", {
+                        staticClass: "vocabulary",
+                        attrs: {
+                          type: "text",
+                          id: "voc" + vocab.id,
+                          disabled: _vm.isDisabled(vocab.id)
+                        },
+                        domProps: { value: vocab.value },
+                        on: {
+                          click: function($event) {
+                            return _vm.typing(vocab.id)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("progress", {
+                        ref: index,
+                        refInFor: true,
+                        staticClass: "m-progress",
+                        attrs: { id: vocab.id, value: "0", max: "4" }
+                      })
+                    ]
+                  )
+                }),
+                0
               )
-            }),
-            0
-          )
+            ])
+          ])
         ])
-      ])
-    ])
-  ])
+      ]),
+      _vm._v(" "),
+      _c("guests")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -81747,17 +81798,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _GuestsSideBarComponent_vue_vue_type_template_id_2d9f2307_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GuestsSideBarComponent.vue?vue&type=template&id=2d9f2307&scoped=true& */ "./resources/js/components/GuestsSideBarComponent.vue?vue&type=template&id=2d9f2307&scoped=true&");
-/* harmony import */ var _GuestsSideBarComponent_vue_vue_type_style_index_0_id_2d9f2307_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GuestsSideBarComponent.vue?vue&type=style&index=0&id=2d9f2307&scoped=true&lang=css& */ "./resources/js/components/GuestsSideBarComponent.vue?vue&type=style&index=0&id=2d9f2307&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _GuestsSideBarComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GuestsSideBarComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/GuestsSideBarComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _GuestsSideBarComponent_vue_vue_type_style_index_0_id_2d9f2307_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GuestsSideBarComponent.vue?vue&type=style&index=0&id=2d9f2307&scoped=true&lang=css& */ "./resources/js/components/GuestsSideBarComponent.vue?vue&type=style&index=0&id=2d9f2307&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _GuestsSideBarComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _GuestsSideBarComponent_vue_vue_type_template_id_2d9f2307_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _GuestsSideBarComponent_vue_vue_type_template_id_2d9f2307_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -81771,6 +81824,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/GuestsSideBarComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/GuestsSideBarComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/GuestsSideBarComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestsSideBarComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./GuestsSideBarComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GuestsSideBarComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestsSideBarComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
