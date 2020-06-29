@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Events\UpdateBoardEvent;
 use App\Game;
+use App\GameGuest;
 use App\GameResults;
 use App\VocabularyBase;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -79,5 +81,28 @@ class GameController extends Controller
         broadcast(new UpdateBoardEvent([
             'results' => json_decode($game->result),
         ]));
+    }
+
+    public function joinGameByGuest(Request $request)
+    {
+        $game = Game::findOrFail($request->get('game_id'));
+
+        $game->guests()->create([
+            'username' => $request->get('username'),
+            'email' => $request->get('email'),
+            'join_time' => Carbon::parse($request->get('join_time')),
+            'game_id' => $request->get('game_id')
+        ]);
+        broadcast(new UpdateBoardEvent([
+            'guests' => json_decode($game->guests),
+        ]));
+    }
+
+    public function getGuestsList($id)
+    {
+        $game = Game::findOrFail($id);
+        return [
+            'guests'=> json_decode($game->guests)
+        ];
     }
 }

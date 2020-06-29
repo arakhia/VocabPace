@@ -5,8 +5,8 @@
                 <div class="col-md-10 board-container">
                     <div class="players-container">
                         <div class="player-pane">
-                                <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
-                                <span>User</span>
+                            <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
+                            <span>User</span>
                         </div>
                         <div class="current-results">
                             <span v-if="results&&playerId" >{{results.filter(item=>item.player_id == playerId && item.status == 1).length}}</span>
@@ -54,7 +54,9 @@
         mounted() {
             window.Echo.channel('board-channel')
             .listen('UpdateBoardEvent', (event) => {
-                this.results = event.data.results;
+                if(event.data.results){
+                    this.results = event.data.results;
+                }
             });
         },
         methods: {
@@ -75,7 +77,6 @@
                     this.vocabulary = response.data.vocabulary,
                     this.results = response.data.results
                 });
-                
             },
             typing: function(index) {
                 this.updateGame(index);
@@ -116,11 +117,6 @@
                     this.updateGame(vocabularyIndex, answer, 0);
                 }
             },
-            createGame: function () 
-            {
-                //update results
-                axios.post('game/create');
-            },
             updateGame: function (vocabularyId, answer, status) 
             {
                 //update results
@@ -132,6 +128,29 @@
                     status: status,
                 });
             },
+            handleOk: function(bvModelEvent)
+            {
+                bvModelEvent.preventDefault();
+                this.joinAsGuest()
+            },
+            joinAsGuest: function()
+            {
+                if(!this.$refs.form.checkValidity()){
+                    return;
+                }
+                
+                //console.log('SS ', this.form.guestName);
+                axios.post('api/game/guest/join', {
+                    username: this.form.guestName,
+                    email: this.form.guestEmail,
+                    join_time: window.moment('YYYY-MM-DD HH:mm:ss').toDate().getTime(),
+                    game_id: this.$route.params.id,
+                })
+                .catch(function(error){
+                    console.log("ERROR  ", error);
+                    
+                });
+            }
         }
     }
 </script>

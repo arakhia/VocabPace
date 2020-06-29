@@ -72,9 +72,6 @@
             },
             getRelativeTime: function(datetime){
                 return window.moment(datetime).fromNow();
-            },
-            openGame: function(gameId){
-                window.location.href = "/game";
             }
         }
     }

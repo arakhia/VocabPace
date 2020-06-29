@@ -15,4 +15,9 @@ class Game extends Model
     {
         return $this->belongsToMany('App\VocabularyBase', 'App\GameResults', 'game_id', 'vocabulary_id');
     }
+
+    public function guests()
+    {
+        return $this->hasMany('App\GameGuest', 'game_id', 'id');
+    }
 }
