@@ -58,7 +58,6 @@ class GameController extends Controller
 
         $game = new Game();
         $game->player_01_id = Auth::user()->id;
-        $game->player_02_id = Auth::user()->id;
         $game->status = true;
         $game->save();
         

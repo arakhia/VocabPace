@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <h1><b>Live Competitions</b></h1>
+        <br>
         <ol class="games">
             <new-game-card></new-game-card>
             <li class="game" v-for="(game, index) in games" :key="index"> 
