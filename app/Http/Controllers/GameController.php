@@ -55,18 +55,24 @@ class GameController extends Controller
 
     public function create(Request $request)
     {
+
         $game = new Game();
         $game->player_01_id = Auth::user()->id;
         $game->player_02_id = Auth::user()->id;
+        $game->status = true;
         $game->save();
         
-        $vocabulary = $this->vocabularyBaseController->getVocabularyJSON(15);
+        $vocabulary = $this->vocabularyBaseController->getVocabularyJSON($request->get('vocabularyCount'));
         foreach($vocabulary as $item){
             $game->result()->create([
                 'game_id' => $game->id,
                 'vocabulary_id' => $item->id,
             ]);
         }
+        
+        return [
+            'gameId' => $game->id
+        ];
     }
 
     public function update(Request $request)

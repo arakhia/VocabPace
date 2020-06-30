@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('games/list', 'GameController@listJson');
 Route::get('game/{id}', 'GameController@game');
+Route::post('game/create', 'GameController@update');
 Route::post('game/update', 'GameController@update');
 Route::post('game/guest/join', 'GameController@joinGameByGuest');
 Route::get('game/{id}/guests', 'GameController@getGuestsList');
+Route::post('game/create', 'GameController@create');

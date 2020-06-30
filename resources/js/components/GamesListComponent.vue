@@ -2,6 +2,7 @@
     <div class="container">
         <h1><b>Live Competitions</b></h1>
         <ol class="games">
+            <new-game-card></new-game-card>
             <li class="game" v-for="(game, index) in games" :key="index"> 
                 <router-link class="game_link" :to="`/game/${game.id}`" >
                     <div class="game_content game_content--lhs">
@@ -59,8 +60,6 @@
             }
         },
         created: function() {
-            
-            
             this.getGamesList();
         },
         methods: {

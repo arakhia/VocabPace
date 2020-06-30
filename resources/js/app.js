@@ -24,7 +24,7 @@ let routes = [
     {path: '/game/:id', name: 'game', component: BoardComponent}
 ];
 
-const router = new VueRouter({
+window.router = new VueRouter({
     routes
 })
 
@@ -43,6 +43,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('board-component', require('./components/BoardComponent.vue').default);
 Vue.component('guests', require('./components/GuestsSideBarComponent.vue').default);
 Vue.component('games-list', require('./components/GamesListComponent.vue').default);
+Vue.component('new-game-card', require('./components/NewGameCardComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -8,7 +8,6 @@
             </div>
             <div>
                 <b-modal id="guestLoginModal" title="Guests Login" ok-title="Join Now" @ok="handleOk" >
-                    <p>Login Form</p>
                     <form ref="form" @submit.stop.prevent="joinAsGuest">
                         <b-form-input 
                             id="guest-name"
@@ -47,7 +46,7 @@
             this.getGuestsList();
         },
         mounted() {
-            this.$bvModal.show('guestLoginModal');
+            //this.$bvModal.show('guestLoginModal');
             window.Echo.channel('board-channel')
             .listen('UpdateBoardEvent', (event) => {
                 if(event.data.guests){
