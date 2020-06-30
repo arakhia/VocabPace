@@ -21,7 +21,6 @@ class GameController extends Controller
      */
     public function __construct(VocabularyBaseController $vocabularyBaseController)
     {
-        $this->middleware('auth');
         $this->vocabularyBaseController = $vocabularyBaseController;
     }
 
