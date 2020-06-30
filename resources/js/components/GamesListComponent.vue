@@ -4,7 +4,7 @@
         <br>
         <ol class="games">
             <new-game-card></new-game-card>
-            <li class="game" v-for="(game, index) in games" :key="index"> 
+            <li class="game" v-for="(game, index) in games" :key="index">
                 <router-link class="game_link" :to="`/game/${game.id}`" >
                     <div class="game_content game_content--lhs">
                         <h2 class="game_title">Game</h2>
@@ -55,16 +55,19 @@
 </template>
 <script>
     export default {
-        data() {
+        data()
+        {
             return {
                 games: null,
             }
         },
-        created: function() {
+        created: function()
+        {
             this.getGamesList();
         },
         methods: {
-            getGamesList: function(){
+            getGamesList: function()
+            {
                 axios.get('/api/games/list')
                 .then(response => {
                     this.games = response.data.games

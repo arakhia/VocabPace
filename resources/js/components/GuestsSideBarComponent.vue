@@ -9,6 +9,7 @@
             <div>
                 <b-modal id="guestLoginModal" title="Guests Login" ok-title="Join Now" @ok="handleOk" >
                     <form ref="form" @submit.stop.prevent="joinAsGuest">
+                        <a @click="joinAsPlayer" align="right" v-if="gameStatus==1&&loggedIn"><p>Join as a Player</p></a>
                         <b-form-input 
                             id="guest-name"
                             v-model="form.guestName"
@@ -36,6 +37,8 @@
         data() {
             return {
                 guests: null,
+                gameStatus: null,
+                loggedIn: (window.userId),
                 form: {
                     guestName: null,
                     guestEmail: null,
@@ -46,7 +49,9 @@
             this.getGuestsList();
         },
         mounted() {
-            //this.$bvModal.show('guestLoginModal');
+            this.getGameStatus();
+            this.$bvModal.show('guestLoginModal');
+
             window.Echo.channel('board-channel')
             .listen('UpdateBoardEvent', (event) => {
                 if(event.data.guests){
@@ -60,7 +65,8 @@
                 bvModelEvent.preventDefault();
                 this.joinAsGuest()
             },
-            getGuestsList: function(){
+            getGuestsList: function()
+            {
                 axios.get('api/game/'+this.$route.params.id+'/guests')
                 .then(response => {
                     this.guests = response.data.guests
@@ -77,6 +83,23 @@
                     email: this.form.guestEmail,
                     join_time: window.moment('YYYY-MM-DD HH:mm:ss').toDate().getTime(),
                     game_id: this.$route.params.id,
+                })
+                .then(response => {
+                    this.$bvModal.hide('guestLoginModal');
+                });
+            },
+            getGameStatus: function()
+            {
+                axios.get('api/game/'+this.$route.params.id+'/status')
+                .then(response => {
+                    this.gameStatus = response.data.status
+                });
+            },
+            joinAsPlayer: function()
+            {
+                axios.post('api/game/join', {
+                    gameId: this.$route.params.id,
+                    playerId: window.userId,
                 })
                 .then(response => {
                     this.$bvModal.hide('guestLoginModal');

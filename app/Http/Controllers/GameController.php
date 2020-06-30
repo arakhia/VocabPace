@@ -88,7 +88,7 @@ class GameController extends Controller
         ]));
     }
 
-    public function joinGameByGuest(Request $request)
+    public function joinGameAsGuest(Request $request)
     {
         $game = Game::findOrFail($request->get('game_id'));
 
@@ -109,5 +109,19 @@ class GameController extends Controller
         return [
             'guests'=> json_decode($game->guests)
         ];
+    }
+
+    public function getGameStatus($id)
+    {
+        $game = Game::findOrFail($id);
+        return ['status' => $game->status];
+    }
+
+    public function joinGameAsPlayer(Request $request)
+    {
+        $game = Game::findOrFail($request->get('gameId'));
+        $game->player_02_id = $request->get('playerId');
+        $game->status = false;
+        $game->save();
     }
 }

@@ -21,6 +21,10 @@ Route::get('games/list', 'GameController@listJson');
 Route::get('game/{id}', 'GameController@game');
 Route::post('game/create', 'GameController@update');
 Route::post('game/update', 'GameController@update');
-Route::post('game/guest/join', 'GameController@joinGameByGuest');
+Route::post('game/guest/join', 'GameController@joinGameAsGuest');
 Route::get('game/{id}/guests', 'GameController@getGuestsList');
 Route::post('game/create', 'GameController@create');
+Route::post('game/join', 'GameController@joinGameAsPlayer');
+
+# No Auth
+Route::get('game/{id}/status', 'GameController@getGameStatus');
