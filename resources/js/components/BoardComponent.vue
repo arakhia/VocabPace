@@ -24,7 +24,7 @@
                         <div  class="card-header" >Vocabulary Board</div>
                         <div class="card-body row" style="align-items: center; align-content: center;">
                             <div class="vocabulary-container" v-for="(vocab, index) in vocabulary" :key="index" >
-                                <input class="vocabulary" type="text"  :value="vocab.value" :id="'voc'+vocab.id" v-on:click="typing(vocab.id)" :disabled="isDisabled(vocab.id)">
+                                <input class="vocabulary" type="text"  :placeholder="vocab.value" :id="'voc'+vocab.id" v-on:click="typing(vocab.id)" :disabled="isDisabled(vocab.id)">
                                 <progress class="m-progress" :id="vocab.id" :ref="index" value="0" :max="vocabulary_timer" > </progress>
                             </div>
                         </div>
