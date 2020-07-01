@@ -20,6 +20,7 @@ class CreateGameResultsTable extends Migration
             $table->bigInteger('vocabulary_id')->unsigned();
             $table->string('answer')->nullable();
             $table->boolean('status')->nullable();
+            $table->integer('finished_time')->nullable();
             $table->timestamps();
         });
 

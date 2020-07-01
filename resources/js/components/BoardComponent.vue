@@ -47,6 +47,8 @@
                 activeInput: null,
                 available: true,
                 playerId: window.userId,
+                vocabulary_local_timer: 0,
+                runTimer: null,
             }
         },
         created() {
@@ -61,7 +63,8 @@
             });
         },
         methods: {
-            isDisabled: function(vocabulary_id){
+            isDisabled: function(vocabulary_id)
+            {
                 var player_id = this.results.find(item=>item.vocabulary_id === vocabulary_id).player_id;
                 var answer = this.results.find(item=>item.vocabulary_id === vocabulary_id).answer;
                 if(player_id == window.userId && answer != null){
@@ -71,7 +74,8 @@
                 }
                 return false;
             },
-            getVocabularyList: function(){
+            getVocabularyList: function()
+            {
                 axios.get('api/game/'+this.$route.params.id)
                 .then(response => {
                     this.gameId = response.data.game.id,
@@ -80,48 +84,55 @@
                     this.vocabulary_timer = response.data.game.vocabulary_timer
                 });
             },
-            typing: function(index) {
+            typing: function(index) 
+            {
 
                 this.updateGame(index);
                 if(index == this.activeInput){
                     return;
                 }
+
                 if(this.activeInput != null){
-                    this.isAnswerCorrect(index);
-                    document.getElementById('voc'+index).disabled = true;
+                    var finishedTime = (this.vocabulary_timer-this.vocabulary_local_timer);
+                    this.isAnswerCorrect(this.activeInput, finishedTime);
+                    document.getElementById('voc'+this.activeInput).disabled = true;
+                    clearInterval(this.runTimer);
                 }
+                
                 this.activeInput = index;
                 this.startProgressbar(index, parseInt(this.vocabulary_timer));
             },
             startProgressbar: function(id, timer)
-            {    
+            {
+                
+                this.vocabulary_local_timer = timer;
                 var self = this;
                 document.getElementById('voc'+id).value = '';
                 document.getElementById(id).max = timer;
                 
-                var runTimer = setInterval(function() {
-                    document.getElementById(id).value = parseInt(self.vocabulary_timer) - timer;
-                    timer--;
-                    if (timer < 0)
+                this.runTimer = setInterval(function() {
+                    document.getElementById(id).value = parseInt(self.vocabulary_timer) - self.vocabulary_local_timer;
+                    self.vocabulary_local_timer--;
+                    if (self.vocabulary_local_timer < 0)
                     {
-                        self.isAnswerCorrect(id);
+                        self.isAnswerCorrect(id, 10);
                         document.getElementById('voc'+id).disabled = true;
                         self.activeInput = null;
-                        clearInterval(runTimer);
+                        clearInterval(self.runTimer);
                     }
                 }, 1000);
             },
-            isAnswerCorrect: function(vocabularyIndex)
+            isAnswerCorrect: function(vocabularyIndex, finishedTime)
             {
                 var answer = document.getElementById('voc'+vocabularyIndex).value;
                 var originalVocabulary = this.vocabulary.find(item=>item.id === vocabularyIndex).value;
                 if(originalVocabulary.localeCompare(answer, undefined, {sensitivity: 'accent'}) === 0){
-                    this.updateGame(vocabularyIndex, answer, 1);
+                    this.updateGame(vocabularyIndex, answer, 1, finishedTime);
                 } else {
-                    this.updateGame(vocabularyIndex, answer, 0);
+                    this.updateGame(vocabularyIndex, answer, 0, finishedTime);
                 }
             },
-            updateGame: function (vocabularyId, answer, status) 
+            updateGame: function (vocabularyId, answer, status, finishedTime) 
             {
                 //update results
                 axios.post('api/game/update', {
@@ -130,6 +141,7 @@
                     playerId: window.userId,
                     answer: answer,
                     status: status,
+                    finishedTime: finishedTime,
                 });
             },
             handleOk: function(bvModelEvent)

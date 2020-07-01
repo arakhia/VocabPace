@@ -81,6 +81,7 @@ class GameController extends Controller
         $result->player_id = $request->get('playerId');
         $result->answer = $request->get('answer');
         $result->status = $request->get('status');
+        $result->finished_time = $request->get('finishedTime');
         $result->save();
 
         broadcast(new UpdateBoardEvent([
