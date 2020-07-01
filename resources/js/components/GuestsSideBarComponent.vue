@@ -86,6 +86,7 @@
                 })
                 .then(response => {
                     this.$bvModal.hide('guestLoginModal');
+                    Cookies.set('guest', true, { expires: 1});
                 });
             },
             getGameStatus: function()

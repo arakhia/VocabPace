@@ -16,9 +16,11 @@ window.Vue = require('vue');
 
 import VueRouter from 'vue-router';
 import BootstrapVue from 'bootstrap-vue';
+import Cookies from 'js-cookie';
 
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
+Vue.use(Cookies);
 
 let routes = [
     {path: '/', component: GamesListComponent},
@@ -57,5 +59,6 @@ Vue.component('new-game-card', require('./components/NewGameCardComponent.vue').
 
 const app = new Vue({
     el: '#app',
-    router
-});
+    router,
+    
+},);
