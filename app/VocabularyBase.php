@@ -10,4 +10,9 @@ class VocabularyBase extends Model
     protected $fillable = [
         'value',
     ];
+
+    public function results()
+    {
+        return $this->hasMany('App\GameResults', 'vocabulary_id', 'id');
+    }
 }
