@@ -40,8 +40,8 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav ml-auto" align="center">
                         <li class="nav-item dropdown">
-                            <a href="" role="button"  >
-                                <b>Online Competitions</b> <span class="caret"></span>
+                            <a href="/#/profile/{{Auth::user()->username}}">
+                                <b>My Performance</b>
                             </a>
                         </li>
                     </ul>

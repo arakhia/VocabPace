@@ -7,6 +7,7 @@
 //const { default: VueRouter } = require('vue-router');
 import BoardComponent from './components/BoardComponent';
 import GamesListComponent from './components/GamesListComponent';
+import UserDashboardComponent from './components/UserDashboardComponent';
 require('./bootstrap');
 
 
@@ -21,7 +22,8 @@ Vue.use(BootstrapVue);
 
 let routes = [
     {path: '/', component: GamesListComponent},
-    {path: '/game/:id', name: 'game', component: BoardComponent}
+    {path: '/game/:id', name: 'game', component: BoardComponent},
+    {path: '/profile/:username', name: 'profile', component: UserDashboardComponent}
 ];
 
 window.router = new VueRouter({

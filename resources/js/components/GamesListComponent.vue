@@ -55,14 +55,12 @@
 </template>
 <script>
     export default {
-        data()
-        {
+        data() {
             return {
                 games: null,
             }
         },
-        created: function()
-        {
+        created: function() {
             this.getGamesList();
         },
         methods: {
