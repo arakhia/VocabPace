@@ -25,7 +25,7 @@
                         <div class="card-body row" style="align-items: center; align-content: center;">
                             <div class="vocabulary-container" v-for="(vocab, index) in vocabulary" :key="index" >
                                 <input class="vocabulary" type="text"  :value="vocab.value" :id="'voc'+vocab.id" v-on:click="typing(vocab.id)" :disabled="isDisabled(vocab.id)">
-                                <progress class="m-progress" :id="vocab.id" :ref="index" value="0" max="4"> </progress>
+                                <progress class="m-progress" :id="vocab.id" :ref="index" value="0" :max="vocabulary_timer" > </progress>
                             </div>
                         </div>
                     </div>
@@ -42,6 +42,7 @@
             return {
                 gameId: null,
                 vocabulary: null,
+                vocabulary_timer: 0,
                 results: null,
                 activeInput: null,
                 available: true,
@@ -73,12 +74,14 @@
             getVocabularyList: function(){
                 axios.get('api/game/'+this.$route.params.id)
                 .then(response => {
-                    this.gameId = response.data.gameId,
+                    this.gameId = response.data.game.id,
                     this.vocabulary = response.data.vocabulary,
-                    this.results = response.data.results
+                    this.results = response.data.results,
+                    this.vocabulary_timer = response.data.game.vocabulary_timer
                 });
             },
             typing: function(index) {
+
                 this.updateGame(index);
                 if(index == this.activeInput){
                     return;
@@ -88,15 +91,16 @@
                     document.getElementById('voc'+index).disabled = true;
                 }
                 this.activeInput = index;
-                this.startProgressbar(index, 4);
+                this.startProgressbar(index, parseInt(this.vocabulary_timer));
             },
             startProgressbar: function(id, timer)
             {    
                 var self = this;
                 document.getElementById('voc'+id).value = '';
+                document.getElementById(id).max = timer;
                 
                 var runTimer = setInterval(function() {
-                    document.getElementById(id).value = 4 - timer;
+                    document.getElementById(id).value = parseInt(self.vocabulary_timer) - timer;
                     timer--;
                     if (timer < 0)
                     {
@@ -139,7 +143,6 @@
                     return;
                 }
                 
-                //console.log('SS ', this.form.guestName);
                 axios.post('api/game/guest/join', {
                     username: this.form.guestName,
                     email: this.form.guestEmail,
@@ -148,7 +151,6 @@
                 })
                 .catch(function(error){
                     console.log("ERROR  ", error);
-                    
                 });
             }
         }

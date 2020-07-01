@@ -46,7 +46,7 @@ class GameController extends Controller
     {
         $game = Game::findOrFail($id);
         return [
-            'gameId' => $game->id,
+            'game' => json_decode($game),
             'vocabulary'=> json_decode($game->vocabulary),
             'results' => json_decode($game->result)
         ];
@@ -57,6 +57,7 @@ class GameController extends Controller
 
         $game = new Game();
         $game->player_01_id = Auth::user()->id;
+        $game->vocabulary_timer = $request->get('vocabularyTimer');
         $game->status = true;
         $game->save();
         

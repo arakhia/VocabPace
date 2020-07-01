@@ -55,6 +55,15 @@
                         placeholder="Number of Vocabulary"
                         required>
                     </b-form-input>
+                    <br>
+                    <b-form-input 
+                        id="vocabulary-timer"
+                        v-model="form.vocabularyTimer"
+                        type="number"
+                        max="30"
+                        placeholder="Vocabulary Timer"
+                        required>
+                    </b-form-input>
                 </form>    
             </b-modal>
         </div>
@@ -67,6 +76,7 @@ export default {
         return {
             form: {
                 vocabularyCount: null,
+                vocabularyTimer: null,
             },
         }
     },
@@ -91,6 +101,7 @@ export default {
             
             axios.post('api/game/create', {
                 vocabularyCount: this.form.vocabularyCount,
+                vocabularyTimer: this.form.vocabularyTimer,
             })
             .then(response => {
                 router.push({name: 'game', params: {id: response.data.gameId} });

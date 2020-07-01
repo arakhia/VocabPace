@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::post('game/create', 'GameController@create');
     Route::post('game/update', 'GameController@update');
     Route::post('game/join', 'GameController@joinGameAsPlayer');
