@@ -10,7 +10,7 @@ export const router = new VueRouter({
     routes: [
         {
             path: '/', 
-            name: 'list', 
+            name: 'home', 
             component: GamesListComponent
         },
         {
@@ -28,7 +28,7 @@ export const router = new VueRouter({
         },
         {
             path: '*', 
-            redirect: {name: 'list'}
+            redirect: {name: 'home'}
         }
     ],
     //mode: 'history'
