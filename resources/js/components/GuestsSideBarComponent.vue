@@ -7,7 +7,7 @@
                 <span>{{guest.username}}</span>
             </div>
             <div>
-                <b-modal id="guestLoginModal" title="Guests Login" ok-title="Join Now" @ok="handleOk" >
+                <b-modal id="guestLoginModal" title="Guests Login" ok-title="Join Now" no-close-on-backdrop no-close-on-etc ok-only hide-header-close @ok="handleOk" >
                     <form ref="form" @submit.stop.prevent="joinAsGuest">
                         <a @click="joinAsPlayer" align="right" v-if="gameStatus==1&&loggedIn"><p>Join as a Player</p></a>
                         <b-form-input 
@@ -28,7 +28,6 @@
                 </b-modal>
             </div>
         </div>
-        
     </div>
 </template>
 

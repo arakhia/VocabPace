@@ -23,14 +23,37 @@ Vue.use(BootstrapVue);
 Vue.use(Cookies);
 
 let routes = [
-    {path: '/', component: GamesListComponent},
-    {path: '/game/:id', name: 'game', component: BoardComponent},
-    {path: '/profile/:username', name: 'profile', component: UserDashboardComponent}
+    {
+        path: '/', 
+        name: 'list', 
+        component: GamesListComponent
+    },
+    {
+        path: '/game/:id', 
+        name: 'game', 
+        component: BoardComponent
+    },
+    {
+        path: '/profile/:username', 
+        name: 'profile', 
+        component: UserDashboardComponent,
+        meta: {
+            requiredAuth: true
+        }
+    }
 ];
 
 window.router = new VueRouter({
     routes
 })
+
+window.router.beforeEach((to, from, next) => {
+    if(to.meta.requiredAuth){
+        window.location.href = 'login';
+    } else {
+        next();
+    }
+});
 
 /**
  * The following block of code may be used to automatically register your
@@ -60,5 +83,4 @@ Vue.component('new-game-card', require('./components/NewGameCardComponent.vue').
 const app = new Vue({
     el: '#app',
     router,
-    
 },);

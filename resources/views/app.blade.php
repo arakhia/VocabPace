@@ -40,9 +40,11 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav ml-auto" align="center">
                         <li class="nav-item dropdown">
+                            @if(Auth::user())
                             <a href="/#/profile/{{Auth::user()->username}}">
                                 <b>My Performance</b>
                             </a>
+                            @endif
                         </li>
                     </ul>
 
