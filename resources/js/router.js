@@ -16,10 +16,7 @@ export const router = new VueRouter({
         {
             path: '/game/:id', 
             name: 'game', 
-            component: BoardComponent,
-            meta: {
-                requiredAuth: true
-            }
+            component: BoardComponent
         },
         {
             path: '/profile/:username', 
@@ -28,13 +25,17 @@ export const router = new VueRouter({
             meta: {
                 requiredAuth: true
             }
+        },
+        {
+            path: '*', 
+            redirect: {name: 'list'}
         }
     ],
-    mode: 'history'
+    //mode: 'history'
 });
 
 router.beforeEach((to, from, next) => {
-    if(to.meta.requiredAuth){
+    if(to.meta.requiredAuth && window.loggedIn != true){
         window.location.href = 'login';
     } else {
         next();

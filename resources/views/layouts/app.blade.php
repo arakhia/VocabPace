@@ -22,7 +22,7 @@
 </head>
 @if(Auth::check())
 <script>
-    window.userId = "{{Auth::user()->id}}";
+    window.loggedIn = true;
 </script>
 @endif
 <body>
@@ -39,10 +39,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav ml-auto" align="center">
-                        <li class="nav-item dropdown">
-                            <a href="" role="button"  >
-                                <b>Online Competitions</b> <span class="caret"></span>
+                        <li class="nav-item">
+                            @if(Auth::check())
+                            <a href="/#/profile/{{Auth::user()->username}}">
+                                <b>My Dashboard</b>
                             </a>
+                            @endif
                         </li>
                     </ul>
 
@@ -86,6 +88,7 @@
 
         <main class="py-4">
             @yield('content')
+            <router-view></router-view>
         </main>
     </div>
 </body>

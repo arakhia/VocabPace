@@ -8,6 +8,6 @@ class SignlePageController extends Controller
 {
     public function index()
     {
-        return view('app');
+        return view('layouts.app');
     }
 }
