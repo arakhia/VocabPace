@@ -4,13 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-//const { default: VueRouter } = require('vue-router');
-import BoardComponent from './components/BoardComponent';
-import GamesListComponent from './components/GamesListComponent';
-import UserDashboardComponent from './components/UserDashboardComponent';
 require('./bootstrap');
 
-
+import {router} from './router';
 
 window.Vue = require('vue');
 
@@ -21,39 +17,6 @@ import Cookies from 'js-cookie';
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(Cookies);
-
-let routes = [
-    {
-        path: '/', 
-        name: 'list', 
-        component: GamesListComponent
-    },
-    {
-        path: '/game/:id', 
-        name: 'game', 
-        component: BoardComponent
-    },
-    {
-        path: '/profile/:username', 
-        name: 'profile', 
-        component: UserDashboardComponent,
-        meta: {
-            requiredAuth: true
-        }
-    }
-];
-
-window.router = new VueRouter({
-    routes
-})
-
-window.router.beforeEach((to, from, next) => {
-    if(to.meta.requiredAuth){
-        window.location.href = 'login';
-    } else {
-        next();
-    }
-});
 
 /**
  * The following block of code may be used to automatically register your
@@ -77,8 +40,6 @@ Vue.component('new-game-card', require('./components/NewGameCardComponent.vue').
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-
 
 const app = new Vue({
     el: '#app',
