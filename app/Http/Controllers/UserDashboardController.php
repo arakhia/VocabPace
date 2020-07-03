@@ -13,11 +13,9 @@ class UserDashboardController extends Controller
 {
     public function getUserVocabulary()
     {
-        $userVocabulary = Auth::user()->vocabulary()->withCount('results')->get()->unique("id");
-        $userChallenges = Auth::user()->games()->groupBy(function (Game $vocab){
-            return Carbon::parse($vocab->created_at)->format('M Y');
-        });
-
+        $userVocabulary = Auth::user()->oldVocabulary(); //->vocabulary()->withCount('results')->get()->unique("id");
+        $userChallenges = Auth::user()->oldGames();
+        
         return [
             'vocabulary' => json_decode($userVocabulary),
             'challenges' => json_decode($userChallenges)

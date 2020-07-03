@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -37,11 +38,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function games()
-    {
-        return $this->firstPlayer->merge($this->secondPlayer);
-    }
-
     public function firstPlayer()
     {
         return $this->hasMany('App\Game', 'player_01_id', 'id');
@@ -50,6 +46,11 @@ class User extends Authenticatable
     public function secondPlayer()
     {
         return $this->hasMany('App\Game', 'player_02_id', 'id');
+    }
+
+    public function games()
+    {
+        return $this->firstPlayer->merge($this->secondPlayer);
     }
 
     public function game_result()
@@ -61,4 +62,17 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\VocabularyBase', 'App\GameResults', 'player_id', 'vocabulary_id');
     }
+
+    public function oldGames()
+    {
+        return $this->games()->groupBy(function (Game $game){
+            return Carbon::parse($game->created_at)->format('M Y');
+        });
+    }
+
+    public function oldVocabulary()
+    {
+        return $this->vocabulary()->withCount('results')->get()->unique("id");
+    }
+
 }
