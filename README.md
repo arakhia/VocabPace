@@ -1,8 +1,6 @@
 <div class="row" align="center">
 <p>
 <img src="public/svg/board.svg">
-</p>
-<p>
 <img src="public/svg/brush.svg">
 </p>
 </dic>
