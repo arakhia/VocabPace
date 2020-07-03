@@ -19,6 +19,10 @@
                 </tr>
             </tbody>
         </table>
+        <br>
+        <div>
+            <div id="old_games_line_chart" style="width: 900px; height: 500px;"></div>
+        </div>
     </div>
 </template>
 
@@ -28,11 +32,11 @@ export default {
         return {
             vocabulary: null,
             vocabularyChunk: null,
+            oldGames: null,
         }
     },
     created: function(){   
         this.getUserVocabulary();
-        
     },
     methods: {
         getUserVocabulary: function()
@@ -40,8 +44,59 @@ export default {
             axios.get('/api/profile/dashboard')
             .then(response => {
                 this.vocabulary = response.data.vocabulary,
-                this.vocabularyChunk = _.chunk(this.vocabulary, 6);
+                this.oldGames = response.data.challenges,
+                this.vocabularyChunk = _.chunk(this.vocabulary, 6),
+                this.buildChallengesChart();
             });
+        },
+        buildChallengesChart: function()
+        {
+            var list = this.oldGames;
+
+            var myData = [];
+    
+            for(var month in list){
+                myData.push([month, list[month].length]);
+            }
+
+            var chartWidth = $(document).width() * 0.75;
+            var chartHeight = chartWidth * 0.5;
+            var scope = this;
+
+            google.charts.load('current', {packages: ['corechart', 'line']});
+            google.charts.setOnLoadCallback(function() {
+                scope.drawLineChart(myData, 'Month', 'Challenge', 'Month', 'Challenge', 'old_games_line_chart', 'Previous Challenges', null, chartWidth, chartHeight);
+            });
+        },
+        drawLineChart: function(myData, hAxisTitle, vAxisTitle, firstCol, secondCol, elementId, title,chartBackgroundColor, width, height)
+        {
+            
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', firstCol);
+            data.addColumn('number', secondCol);
+
+            data.addRows(myData);
+
+            if(!chartBackgroundColor){
+                chartBackgroundColor = chartBackgroundColor;
+            }
+
+            var options = {
+                hAxis: {
+                    title: hAxisTitle
+                },
+                vAxis: {
+                    title: vAxisTitle,
+                    format: '0'
+                },
+                title: title, 
+                width: width,
+                height: height,
+                backgroundColor: '#f8fafc'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById(elementId));
+            chart.draw(data, options);
         },
     }
 }
