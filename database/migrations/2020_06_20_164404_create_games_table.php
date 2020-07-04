@@ -17,16 +17,10 @@ class CreateGamesTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->integer('vocabulary_timer')->nullable();
-            $table->bigInteger('player_01_id')->unsigned()->nullable();
-            $table->bigInteger('player_02_id')->unsigned()->nullable();
+            $table->integer('max_players')->default(2);
             $table->boolean('status')->nullable();
             $table->boolean('public')->nullable();
             $table->timestamps();
-        });
-
-        Schema::table('games', function (Blueprint $table) {
-            $table->foreign('player_01_id')->references('id')->on('users');
-            $table->foreign('player_02_id')->references('id')->on('users');
         });
     }
 

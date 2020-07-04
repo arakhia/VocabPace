@@ -7,8 +7,10 @@
 require('./bootstrap');
 
 import {router} from './router';
+import crypto from 'crypto';
 
 window.router =  router;
+window._crypto = crypto;
 
 window.Vue = require('vue');
 

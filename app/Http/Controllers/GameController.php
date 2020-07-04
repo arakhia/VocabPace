@@ -54,13 +54,16 @@ class GameController extends Controller
 
     public function create(Request $request)
     {
-
         $game = new Game();
-        $game->player_01_id = Auth::user()->id;
         $game->vocabulary_timer = $request->get('vocabularyTimer');
         $game->name = $request->get('competitionName');
         $game->status = true;
         $game->save();
+
+        $game->player()->create([
+            'game_id' => $game->id,
+            'user_id' => Auth::user()->id,
+        ]);
         
         $vocabulary = $this->vocabularyBaseController->getVocabularyJSON($request->get('vocabularyCount'));
         foreach($vocabulary as $item){
@@ -122,12 +125,13 @@ class GameController extends Controller
     public function joinGameAsPlayer(Request $request)
     {
         $game = Game::findOrFail($request->get('gameId'));
-        if($game->hasPlayer(Auth::user()->id)){
+        if($game->player->count() >= $game->max_players || $game->player->contains('user_id', Auth::user()->id)){
             return;
         }
 
-        $game->player_02_id = $request->get('playerId');
-        $game->status = false;
-        $game->save();
+        $game->player()->create([
+            'game_id' => $game->id,
+            'user_id' => Auth::user()->id,
+        ]);
     }
 }

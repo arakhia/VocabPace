@@ -5,7 +5,7 @@
                 <div class="col-md-10 board-container">
                     <div class="players-container">
                         <div class="player-pane">
-                            <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
+                            <img class="rounded-circle" :src="getUserAvatarByEmail('example@example')" height="50em" width="50em" alt="test image">
                             <span>User</span>
                         </div>
                         <div class="current-results">
@@ -164,6 +164,12 @@
                 .catch(function(error){
                     console.log("ERROR  ", error);
                 });
+            },
+            getUserAvatarByEmail: function(email)
+            {
+                var userEmail = window._crypto.createHash('md5').update(email.toLowerCase().trim()).digest('hex');
+                var iconURL = "https://www.gravatar.com/avatar/" + userEmail + "?s=180&d=identicon&r=g";
+                return iconURL;
             }
         }
     }
