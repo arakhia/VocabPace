@@ -78,7 +78,7 @@ class GameController extends Controller
     public function update(Request $request)
     {
         $game = Game::findOrFail($request->get('gameId'));
-        $result = GameResults::where('vocabulary_id', $request->get('vocabularyId'))->firstOrFail();
+        $result = GameResults::where([['game_id', $game->id],['vocabulary_id', $request->get('vocabularyId')]])->firstOrFail();
         $result->player_id = $request->get('playerId');
         $result->answer = $request->get('answer');
         $result->status = $request->get('status');
