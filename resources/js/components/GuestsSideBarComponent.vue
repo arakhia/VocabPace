@@ -9,7 +9,7 @@
             <div>
                 <b-modal id="guestLoginModal" title="Guests Login" ok-title="Join Now" no-close-on-backdrop no-close-on-etc ok-only hide-header-close @ok="handleOk" >
                     <form ref="form" @submit.stop.prevent="joinAsGuest">
-                        <a @click="joinAsPlayer" align="right" v-if="gameStatus==1&&loggedIn"><p>Join as a Player</p></a>
+                        <a v-if="gameStatus==1&&loggedIn" align="right" @click="joinAsPlayer"><p>Join as a Player</p></a>
                         <b-form-input 
                             id="guest-name"
                             v-model="form.guestName"
@@ -37,7 +37,7 @@
             return {
                 guests: null,
                 gameStatus: null,
-                loggedIn: (window.userId),
+                loggedIn: (window.loggedIn),
                 form: {
                     guestName: null,
                     guestEmail: null,

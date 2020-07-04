@@ -24,6 +24,7 @@
 @if(Auth::check())
 <script>
     window.loggedIn = true;
+    window.userId = '{{Auth::user()->id}}';
 </script>
 @endif
 <body>

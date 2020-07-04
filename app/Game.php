@@ -20,4 +20,11 @@ class Game extends Model
     {
         return $this->hasMany('App\GameGuest', 'game_id', 'id');
     }
+
+    public function hasPlayer($playerId)
+    {
+        return ($this->where([['id', $this->id],['player_01_id', $playerId]])
+                        ->OrWhere([['id', $this->id],['player_02_id', $playerId]])
+                            ->count()>0);
+    }
 }

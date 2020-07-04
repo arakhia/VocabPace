@@ -121,6 +121,10 @@ class GameController extends Controller
     public function joinGameAsPlayer(Request $request)
     {
         $game = Game::findOrFail($request->get('gameId'));
+        if($game->hasPlayer(Auth::user()->id)){
+            return;
+        }
+
         $game->player_02_id = $request->get('playerId');
         $game->status = false;
         $game->save();
