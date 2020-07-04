@@ -58,6 +58,7 @@ class GameController extends Controller
         $game = new Game();
         $game->player_01_id = Auth::user()->id;
         $game->vocabulary_timer = $request->get('vocabularyTimer');
+        $game->name = $request->get('competitionName');
         $game->status = true;
         $game->save();
         

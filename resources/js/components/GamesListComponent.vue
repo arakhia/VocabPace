@@ -7,7 +7,7 @@
             <li class="game" v-for="(game, index) in games" :key="index">
                 <router-link class="game_link" :to="`/game/${game.id}`" >
                     <div class="game_content game_content--lhs">
-                        <h2 class="game_title">Game</h2>
+                        <h2 class="game_title">{{game.name}}</h2>
                         <div class="row game_players" style="display: flex; justify-content: space-between;">
                             <div class="player-pane">
                                 <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="game_content game_content--rhs" aria-hidden="true">
-                        <h2 class="game_title">Game</h2>
+                        <h2 class="game_title">{{game.name}}</h2>
                         <div class="row game_players" style="display: flex; justify-content: space-between;">
                             <div class="player-pane">
                                 <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7eefea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">

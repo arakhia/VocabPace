@@ -8,6 +8,8 @@ require('./bootstrap');
 
 import {router} from './router';
 
+window.router =  router;
+
 window.Vue = require('vue');
 
 import VueRouter from 'vue-router';

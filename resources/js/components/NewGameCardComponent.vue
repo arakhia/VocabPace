@@ -48,6 +48,14 @@
             <b-modal id="createGameModal" title="Create Competition" ok-title="Join Now" @ok="handleOk" >
                 <form ref="form">
                     <b-form-input 
+                        id="competition-name"
+                        v-model="form.competitionName"
+                        type="text"
+                        placeholder="Competition Name"
+                        required>
+                    </b-form-input>
+                    <br>
+                    <b-form-input 
                         id="vocabulary-count"
                         v-model="form.vocabularyCount"
                         type="number"
@@ -75,6 +83,7 @@ export default {
     data() {
         return {
             form: {
+                competitionName: null,
                 vocabularyCount: null,
                 vocabularyTimer: null,
             },
@@ -100,11 +109,12 @@ export default {
             }
             
             axios.post('api/game/create', {
+                competitionName: this.form.competitionName,
                 vocabularyCount: this.form.vocabularyCount,
                 vocabularyTimer: this.form.vocabularyTimer,
             })
             .then(response => {
-                router.push({name: 'game', params: {id: response.data.gameId} });
+                window.router.push({name: 'game', params: {id: response.data.gameId} });
             })
             .catch(function(error){
                 console.log("ERROR  ", error);
