@@ -10,11 +10,11 @@
                         </div>
                         <div v-else class="player-pane"> </div>
                         <div class="current-results">
-                            <span v-if="results&&playerId" >{{results.filter(item=>item.player_id == playerId && item.status == 1).length}}</span>
+                            <span v-if="results&&players" >{{results.filter(item=>item.player_id == players[0].id && item.status == 1).length}}</span>
                             <svg class="bi bi-lightning-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
                             </svg>
-                            <span v-if="results&&playerId" >{{results.filter(item=>item.player_id != playerId && item.status == 1).length}}</span>
+                            <span v-if="results&&players" >{{results.filter(item=>item.player_id == players[1].id && item.status == 1).length}}</span>
                         </div>
                         <div v-if="players[1]" class="player-pane">
                             <img class="rounded-circle" :src="getUserAvatarByEmail(players[1].email)" height="50em" width="50em" alt="test image">
@@ -55,7 +55,7 @@
             }
         },
         created() {
-            this.getVocabularyList();
+            this.getVocabularyList();  
         },
         mounted() {
             window.Echo.channel('board-channel')
