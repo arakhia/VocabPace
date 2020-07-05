@@ -6,9 +6,9 @@
                     <div class="game_content game_content--lhs">
                         <h2 class="game_title">Create Your own</h2>
                         <div class="row game_players" style="display: flex; justify-content: space-between;">
-                            <div class="player-pane">
-                                <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
-                                <span>++++</span>
+                            <div v-if="user" class="player-pane">
+                                <img class="rounded-circle" :src="getUserAvatarByEmail(user.email)" height="50em" width="50em" alt="test image">
+                                <span>{{user.username}}</span>
                             </div>
                             <div class="player-pane">
                             
@@ -87,9 +87,11 @@ export default {
                 vocabularyCount: null,
                 vocabularyTimer: null,
             },
+            user: null,
         }
     },
     created() {
+        this.getUserProfile();
     },
     methods: {
         createGame: function()
@@ -100,7 +102,14 @@ export default {
         handleOk: function(bvModelEvent)
         {
             bvModelEvent.preventDefault();
-            this.CreateGame()
+            this.CreateGame();
+        },
+        getUserProfile: function()
+        {
+            axios.get('api/profile')
+            .then(response => {
+                this.user = response.data.user
+            });
         },
         CreateGame: function()
         {

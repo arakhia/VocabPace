@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::post('game/update', 'GameController@update');
     Route::post('game/join', 'GameController@joinGameAsPlayer');
 
+    Route::get('profile', 'UserDashboardController@getUserProfile');
     Route::get('profile/dashboard', 'UserDashboardController@getUserVocabulary');
 });
 

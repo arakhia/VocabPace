@@ -38,21 +38,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function firstPlayer()
-    {
-        return $this->hasMany('App\Game', 'player_01_id', 'id');
-    }
-
-    public function secondPlayer()
-    {
-        return $this->hasMany('App\Game', 'player_02_id', 'id');
-    }
-
-    public function games()
-    {
-        return $this->firstPlayer->merge($this->secondPlayer);
-    }
-
     public function game_result()
     {
         return $this->hasMany('App\GameResults', 'player_id', 'id');
@@ -63,9 +48,14 @@ class User extends Authenticatable
         return $this->belongsToMany('App\VocabularyBase', 'App\GameResults', 'player_id', 'vocabulary_id');
     }
 
+    public function games()
+    {
+        return $this->belongsToMany('App\Game', 'App\GameUser');
+    }
+
     public function oldGames()
     {
-        return $this->games()->groupBy(function (Game $game){
+        return $this->games()->get()->groupBy(function (Game $game){
             return Carbon::parse($game->created_at)->format('M Y');
         });
     }

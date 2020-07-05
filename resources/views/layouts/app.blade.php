@@ -40,14 +40,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto" align="center">
-                        <li class="nav-item">
-                            @if(Auth::check())
-                            <a href="/#/profile/{{Auth::user()->username}}">
-                                <b>My Dashboard</b>
-                            </a>
-                            @endif
-                        </li>
+                    <ul class="navbar-nav ml-auto">
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -70,6 +63,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/#/profile/{{Auth::user()->username}}">
+                                        My Dashboard
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
