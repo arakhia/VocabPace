@@ -36,7 +36,7 @@ class GameController extends Controller
 
     public function listJson()
     {
-        $games = Game::where('status', 1)->withCount('vocabulary')->get();
+        $games = Game::where('status', 1)->withCount('vocabulary')->with('users')->get();
         return [
             'games' => json_decode($games)
         ];
@@ -47,6 +47,7 @@ class GameController extends Controller
         $game = Game::findOrFail($id);
         return [
             'game' => json_decode($game),
+            'players' => json_decode($game->users),
             'vocabulary'=> json_decode($game->vocabulary),
             'results' => json_decode($game->result)
         ];

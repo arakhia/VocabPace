@@ -9,19 +9,21 @@
                     <div class="game_content game_content--lhs">
                         <h2 class="game_title">{{game.name}}</h2>
                         <div class="row game_players" style="display: flex; justify-content: space-between;">
-                            <div class="player-pane">
-                                <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
-                                <span>User</span>
+                            <div v-if="game.users[0]" class="player-pane">
+                                <img class="rounded-circle" :src="getUserAvatarByEmail(game.users[0].email)" height="50em" width="50em" alt="test image">
+                                <span>{{game.users[0].username}}</span>
                             </div>
+                            <div v-else class="player-pane"> </div>
                             <div class="player-pane">
                                 <svg class="bi bi-lightning-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
                                 </svg>
                             </div>
-                            <div class="player-pane">
-                                <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
-                                <span>User</span>
+                            <div v-if="game.users[1]" class="player-pane">
+                                <img class="rounded-circle" :src="getUserAvatarByEmail(game.users[1].email)" height="50em" width="50em" alt="test image">
+                                <span>{{game.users[1].username}}</span>
                             </div>
+                            <div v-else class="player-pane"> </div>
                         </div>
                         <div class="game_footer">
                             <p>{{game.vocabulary_count}} Vocabulary</p><time>{{getRelativeTime(game.created_at)}}</time>
@@ -30,19 +32,21 @@
                     <div class="game_content game_content--rhs" aria-hidden="true">
                         <h2 class="game_title">{{game.name}}</h2>
                         <div class="row game_players" style="display: flex; justify-content: space-between;">
-                            <div class="player-pane">
-                                <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7eefea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
-                                <span>User</span>
+                            <div v-if="game.users[0]" class="player-pane">
+                                <img class="rounded-circle" :src="getUserAvatarByEmail(game.users[0].email)" height="50em" width="50em" alt="test image">
+                                <span>{{game.users[0].username}}</span>
                             </div>
+                            <div v-else class="player-pane"> </div>
                             <div class="player-pane">
                                 <svg class="bi bi-lightning-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
                                 </svg>
                             </div>
-                            <div class="player-pane">
-                                <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a452c7eefea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
-                                <span>User</span>
+                            <div v-if="game.users[1]" class="player-pane">
+                                <img class="rounded-circle" :src="getUserAvatarByEmail(game.users[1].email)" height="50em" width="50em" alt="test image">
+                                <span>{{game.users[1].username}}</span>
                             </div>
+                            <div v-else class="player-pane"> </div>
                         </div>
                         <div class="game_footer">
                             <p>{{game.vocabulary_count}} Vocabulary</p><time>{{getRelativeTime(game.created_at)}}</time>

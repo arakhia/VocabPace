@@ -45,6 +45,17 @@ Vue.component('new-game-card', require('./components/NewGameCardComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.mixin({
+    methods: {
+        getUserAvatarByEmail: function(email)
+        {
+            var userEmail = window._crypto.createHash('md5').update(email.toLowerCase().trim()).digest('hex');
+            var iconURL = "https://www.gravatar.com/avatar/" + userEmail + "?s=180&d=identicon&r=g";
+            return iconURL;
+        }
+    }
+});
+
 const app = new Vue({
     el: '#app',
     router,

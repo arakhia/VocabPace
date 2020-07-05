@@ -3,11 +3,12 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-10 board-container">
-                    <div class="players-container">
-                        <div class="player-pane">
-                            <img class="rounded-circle" :src="getUserAvatarByEmail('example@example')" height="50em" width="50em" alt="test image">
-                            <span>User</span>
+                    <div v-if="players" class="players-container">
+                        <div v-if="players[0]" class="player-pane">
+                            <img class="rounded-circle" :src="getUserAvatarByEmail(players[0].email)" height="50em" width="50em" alt="test image">
+                            <span>{{players[0].username}}</span>
                         </div>
+                        <div v-else class="player-pane"> </div>
                         <div class="current-results">
                             <span v-if="results&&playerId" >{{results.filter(item=>item.player_id == playerId && item.status == 1).length}}</span>
                             <svg class="bi bi-lightning-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -15,10 +16,11 @@
                             </svg>
                             <span v-if="results&&playerId" >{{results.filter(item=>item.player_id != playerId && item.status == 1).length}}</span>
                         </div>
-                        <div class="player-pane">
-                            <img class="rounded-circle" src="https://www.gravatar.com/avatar/a3175a4aaa7a8fea80c62a198a40f6c9?s=180&d=monsterid&r=g" height="50em" width="50em" alt="test image">
-                            <span>Admin</span>
+                        <div v-if="players[1]" class="player-pane">
+                            <img class="rounded-circle" :src="getUserAvatarByEmail(players[1].email)" height="50em" width="50em" alt="test image">
+                            <span>{{players[1].username}}</span>
                         </div>
+                        <div v-else class="player-pane"> </div>
                     </div>
                     <div class="card" align="center">
                         <div  class="card-header" >Vocabulary Board</div>
@@ -49,6 +51,7 @@
                 playerId: window.userId,
                 vocabulary_local_timer: 0,
                 runTimer: null,
+                players: null,
             }
         },
         created() {
@@ -81,7 +84,8 @@
                     this.gameId = response.data.game.id,
                     this.vocabulary = response.data.vocabulary,
                     this.results = response.data.results,
-                    this.vocabulary_timer = response.data.game.vocabulary_timer
+                    this.vocabulary_timer = response.data.game.vocabulary_timer,
+                    this.players = response.data.players
                 });
             },
             typing: function(index) 
@@ -164,12 +168,6 @@
                 .catch(function(error){
                     console.log("ERROR  ", error);
                 });
-            },
-            getUserAvatarByEmail: function(email)
-            {
-                var userEmail = window._crypto.createHash('md5').update(email.toLowerCase().trim()).digest('hex');
-                var iconURL = "https://www.gravatar.com/avatar/" + userEmail + "?s=180&d=identicon&r=g";
-                return iconURL;
             }
         }
     }
