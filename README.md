@@ -17,6 +17,7 @@ VocabBoard is a single page web application (SPA) that provides challenging envi
 - Keep track of user performance and vocabulary
 
 ## Credits
+This project uses the following packeges/code and services
 - [Laravel Framework](https://github.com/laravel/laravel)
 - [VusJS Framework](https://github.com/vuejs/vue)
 - [Vus-Router Framework](https://github.com/vuejs/vue-router)
