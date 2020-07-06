@@ -3,7 +3,7 @@
 <img src="public/svg/board.svg">
 <img src="public/svg/brush.svg">
 </p>
-</dic>
+</div>
 
 
 <h1> VocabBoard </h1>
@@ -14,13 +14,20 @@ VocabBoard is a single page web application (SPA) that provides challenging envi
 - Allow users to create competitions and share them
 - Allow two players to compete against each other within limited time frame
 - Allow guests to watch the competition
-- Show user performance and learned vocabulary
+- Keep track of user performance and vocabulary
 
-## Install
-
-### Frameworks & Packages
-
-### Migration and Seeding
+## Credits
+- [Laravel Framework](https://github.com/laravel/laravel)
+- [VusJS Framework](https://github.com/vuejs/vue)
+- [Vus-Router Framework](https://github.com/vuejs/vue-router)
+- [Moment.js](https://momentjs.com/)
+- For users icons [gravatar](https://www.gravatar.com/avatar)
+- [Laravel-Websocket](https://beyondco.de/docs/laravel-websockets/getting-started/introduction)
+- [js-cookie](https://github.com/js-cookie/js-cookie)
+- [Bootstrap Vue](https://bootstrap-vue.org/)
+- [Google Chart](https://developers.google.com/chart)
+- Competition Cards Design from https://codepen.io/dbenmore/pen/eYpYPEL with modifications
+- And many other great packages that come with Laravel
 
 
 
