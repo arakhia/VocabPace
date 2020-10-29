@@ -16,6 +16,11 @@ VocabBoard is a single page web application (SPA) that provides challenging envi
 - Allow guests to watch the competition
 - Keep track of user performance and vocabulary
 
+## Screenshots
+<img src="public/images/vocabboard01.PNG">
+<br> <br>
+<img src="public/images/vocabboard02.PNG">
+
 ## Credits
 This project uses the following packeges/code and services
 - [Laravel Framework](https://github.com/laravel/laravel)
