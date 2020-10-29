@@ -6,10 +6,10 @@
 </div>
 
 
-<h1> VocabBoard </h1>
+<h1> VocabPace </h1>
 
-## About VocabBoard
-VocabBoard is a single page web application (SPA) that provides challenging environment for users to learn new vocabulary in an amazing and charming way. VocabBoard is built with mainly Laravel, VueJS frameworks and many other wonderful open-source packages. VocabBoard has the following features:
+## About VocabPace
+VocabPace is a single page web application (SPA) that provides challenging environment for users to learn new vocabulary in an amazing and charming way. VocabPace is built with mainly Laravel, VueJS frameworks and many other wonderful open-source packages. VocabPace has the following features:
 
 - Allow users to create competitions and share them
 - Allow two players to compete against each other within limited time frame
@@ -44,4 +44,4 @@ Feel free to make a contribution to this project via pull requests.
 
 ## License
 
-VocabBoard is open-sourced software under the MIT license.
+VocabPace is open-sourced software under the MIT license.
